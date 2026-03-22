@@ -453,6 +453,37 @@
             border-color: rgba(245, 127, 23, 0.15);
         }
 
+        /* ---------- Badges (Bestseller / Chef's Pick) ---------- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border-radius: var(--radius-full);
+            white-space: nowrap;
+            vertical-align: middle;
+            margin-left: 6px;
+            position: relative;
+            top: -1px;
+        }
+        .badge--bestseller {
+            background: linear-gradient(135deg, #FFF8E1, #FFE082);
+            color: #F57F17;
+            box-shadow: 0 1px 4px rgba(245,127,23,0.15);
+        }
+        .badge--chef {
+            background: linear-gradient(135deg, #E8F5E9, #A5D6A7);
+            color: #2E7D32;
+            box-shadow: 0 1px 4px rgba(46,125,50,0.15);
+        }
+
+        /* ---------- Diet indicator pills ---------- */
+        .pill--spicy  { background: #FBE9E7; color: #D84315; border-color: rgba(216,67,21,0.15); }
+        .pill--veggie { background: #E8F5E9; color: #2E7D32; border-color: rgba(46,125,50,0.15); }
+
         /* ==========================================================================
        FOOTER
        ========================================================================== */
@@ -668,9 +699,9 @@
 
         <!-- Welcome -->
         <div class="welcome">
-            <span class="welcome__icon">👋</span>
+            <span class="welcome__icon" id="greetIcon">👋</span>
             <div>
-                <p class="welcome__title">Welcome to El Pato!</p>
+                <p class="welcome__title" id="greetTitle">Welcome to El Pato!</p>
                 <p class="welcome__sub">Browse our menu and order with your server.</p>
             </div>
         </div>
@@ -706,6 +737,9 @@
                         <span class="card__price">$20.72</span>
                     </div>
                     <p class="card__desc">Tortilla chips in green salsa, sour cream, cheese, and eggs.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--veggie">🌱 Vegetarian</span>
+                    </div>
                 </div>
             </article>
         </section>
@@ -724,7 +758,7 @@
                 </div>
                 <div class="card__body">
                     <div class="card__top">
-                        <h3 class="card__name">Cubana Torta</h3>
+                        <h3 class="card__name">Cubana Torta <span class="badge badge--bestseller">👑 Bestseller</span></h3>
                         <span class="card__price">$21.10</span>
                     </div>
                     <p class="card__desc">Milanesa, ham, cheese, egg, avocado on a fresh telera roll.</p>
@@ -796,7 +830,7 @@
                 </div>
                 <div class="card__body">
                     <div class="card__top">
-                        <h3 class="card__name">Carne Asada Plate</h3>
+                        <h3 class="card__name">Carne Asada Plate <span class="badge badge--chef">👨‍🍳 Chef's Pick</span></h3>
                         <span class="card__price">$24.50</span>
                     </div>
                     <p class="card__desc">Charbroiled steak served with rice, beans, guacamole.</p>
@@ -816,6 +850,9 @@
                         <span class="card__price">$19.95</span>
                     </div>
                     <p class="card__desc">Three chicken enchiladas in green sauce with melted Swiss cheese.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--spicy">🌶️ Spicy</span>
+                    </div>
                 </div>
             </article>
         </section>
@@ -965,6 +1002,25 @@
             });
         }, { rootMargin: '-130px 0px -55% 0px', threshold: 0 });
         sections.forEach(s => spyObserver.observe(s));
+
+        /* =============================================================
+           4. DYNAMIC GREETING — Based on client's local time
+           ============================================================= */
+        (function setGreeting() {
+            const h = new Date().getHours();
+            const icon = document.getElementById('greetIcon');
+            const title = document.getElementById('greetTitle');
+            if (h < 12) {
+                icon.textContent = '☕';
+                title.textContent = 'Good morning! Welcome to El Pato';
+            } else if (h < 18) {
+                icon.textContent = '☀️';
+                title.textContent = 'Good afternoon! Welcome to El Pato';
+            } else {
+                icon.textContent = '🌙';
+                title.textContent = 'Good evening! Welcome to El Pato';
+            }
+        })();
     </script>
 
 </body>
