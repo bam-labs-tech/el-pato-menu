@@ -1,951 +1,1039 @@
-<!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+﻿<!DOCTYPE html>
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Esther Banquetes — Catálogo de Paquetes Premium</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Restaurante El Pato — Authentic Mexican Food</title>
     <meta name="description"
-        content="Descubre los paquetes premium de Esther Banquetes para bodas, XV años, graduaciones y eventos corporativos. Cotiza ahora por WhatsApp.">
+        content="Browse the digital menu of Restaurante El Pato, serving authentic Mexican food in California since 1999. Breakfast, tortas, tacos, soups and more.">
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        display: ['"Playfair Display"', 'serif'],
-                        body: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        gold: {
-                            400: '#fbbf24',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                        },
-                    },
-                },
-            },
-        }
-    </script>
-
-    <!-- Google Fonts -->
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* ── Base ─────────────────────────────────────── */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #09090b;
-            color: #f4f4f5;
+        /* ==========================================================================
+       DESIGN TOKENS
+       ========================================================================== */
+        :root {
+            --color-bg: #F9F9F9;
+            --color-card: #FFFFFF;
+            --color-red: #C62828;
+            --color-red-soft: #FFEBEE;
+            --color-green: #2E7D32;
+            --color-green-soft: #E8F5E9;
+            --color-text: #212121;
+            --color-text-sec: #757575;
+            --color-text-muted: #9E9E9E;
+            --color-orange: #FF8F00;
+            --color-orange-dk: #EF6C00;
+            --color-border: #EEEEEE;
+            --color-divider: #F5F5F5;
+
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --space-2: 4px;
+            --space-4: 8px;
+            --space-6: 12px;
+            --space-8: 16px;
+            --space-10: 20px;
+            --space-12: 24px;
+            --space-16: 32px;
+            --space-20: 40px;
+
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-full: 9999px;
+
+            --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-fab: 0 6px 24px rgba(255, 143, 0, 0.4), 0 2px 8px rgba(0, 0, 0, 0.1);
+
+            --ease: cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* ── Staggered Fade-In Animation ─────────────── */
-        @keyframes fadeInUp {
-            0% {
+        /* ==========================================================================
+       RESET
+       ========================================================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: var(--font);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.5;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 96px;
+        }
+
+        img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        button {
+            font-family: inherit;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* ==========================================================================
+       HEADER (Sticky)
+       ========================================================================== */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--color-card);
+            padding: 16px 20px 14px;
+            text-align: center;
+            transition: box-shadow 0.3s var(--ease);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header--shadow {
+            box-shadow: var(--shadow-md);
+            border-bottom-color: transparent;
+        }
+
+        .header__row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 2px;
+        }
+
+        .header__logo {
+            font-size: 26px;
+            line-height: 1;
+        }
+
+        .header__name {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--color-red);
+            letter-spacing: -0.4px;
+        }
+
+        .header__tag {
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        /* ==========================================================================
+       CATEGORY TAB BAR (Sticky)
+       ========================================================================== */
+        .tabs {
+            position: sticky;
+            top: 72px;
+            z-index: 90;
+            background: var(--color-bg);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .tabs__list {
+            display: flex;
+            gap: 6px;
+            padding: 10px 16px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tabs__list::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab {
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-text-sec);
+            background: var(--color-card);
+            border: 1.5px solid var(--color-border);
+            border-radius: var(--radius-full);
+            white-space: nowrap;
+            transition: all 0.2s var(--ease);
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tab:active {
+            transform: scale(0.95);
+            transition-duration: 0.1s;
+        }
+
+        .tab:hover {
+            border-color: var(--color-red);
+            color: var(--color-red);
+        }
+
+        .tab--active {
+            background: var(--color-red);
+            color: #fff;
+            border-color: var(--color-red);
+            box-shadow: 0 2px 8px rgba(198, 40, 40, 0.2);
+        }
+
+        .tab--active:hover {
+            color: #fff;
+        }
+
+        .tab__emoji {
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        /* ==========================================================================
+       MAIN
+       ========================================================================== */
+        .main {
+            padding: 16px 12px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ---------- Welcome Banner ---------- */
+        .welcome {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #FFF8E1 0%, #FFE0B2 100%);
+            border: 1px solid rgba(255, 143, 0, 0.12);
+            border-radius: var(--radius-md);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome::after {
+            content: '🌮';
+            position: absolute;
+            right: -6px;
+            bottom: -6px;
+            font-size: 64px;
+            opacity: 0.07;
+            transform: rotate(-15deg);
+        }
+
+        .welcome__icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .welcome__title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .welcome__sub {
+            font-size: 12px;
+            color: var(--color-text-sec);
+            margin-top: 1px;
+        }
+
+        /* ---------- Section ---------- */
+        .section {
+            margin-bottom: 28px;
+        }
+
+        .section__head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        .section__emoji {
+            font-size: 22px;
+            line-height: 1;
+        }
+
+        .section__title {
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        .section__badge {
+            margin-left: auto;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-text-muted);
+            background: var(--color-divider);
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+        }
+
+        /* ==========================================================================
+       DISH CARD (Uber-Eats style)
+       ========================================================================== */
+        .card {
+            display: flex;
+            gap: 14px;
+            background: var(--color-card);
+            border-radius: var(--radius-md);
+            padding: 14px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card:active {
+            transform: scale(0.97) !important;
+            box-shadow: var(--shadow-xs) !important;
+            transition-duration: 0.1s;
+        }
+
+        .card:active .card__img {
+            transform: scale(1) !important;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--color-red), var(--color-orange));
+            opacity: 0;
+            transition: opacity 0.2s var(--ease);
+        }
+
+        .card:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        /* Image */
+        .card__img-wrap {
+            flex-shrink: 0;
+            width: 88px;
+            height: 88px;
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            background: var(--color-divider);
+        }
+
+        .card__img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s var(--ease);
+        }
+
+        .card:hover .card__img {
+            transform: scale(1.06);
+        }
+
+        /* Content */
+        .card__body {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card__top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .card__name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-red);
+            line-height: 1.3;
+        }
+
+        .card__price {
+            flex-shrink: 0;
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--color-green);
+            white-space: nowrap;
+        }
+
+        .card__desc {
+            font-size: 13px;
+            color: var(--color-text-sec);
+            line-height: 1.4;
+            margin-top: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card__pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 6px;
+        }
+
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 600;
+            border-radius: var(--radius-full);
+            border: 1px solid;
+        }
+
+        .pill--green {
+            background: var(--color-green-soft);
+            color: var(--color-green);
+            border-color: rgba(46, 125, 50, 0.15);
+        }
+
+        .pill--red {
+            background: var(--color-red-soft);
+            color: var(--color-red);
+            border-color: rgba(198, 40, 40, 0.15);
+        }
+
+        .pill--amber {
+            background: #FFF8E1;
+            color: #F57F17;
+            border-color: rgba(245, 127, 23, 0.15);
+        }
+
+        /* ---------- Badges (Bestseller / Chef's Pick) ---------- */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 2px 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border-radius: var(--radius-full);
+            white-space: nowrap;
+            vertical-align: middle;
+            margin-left: 6px;
+            position: relative;
+            top: -1px;
+        }
+
+        .badge--bestseller {
+            background: linear-gradient(135deg, #FFF8E1, #FFE082);
+            color: #F57F17;
+            box-shadow: 0 1px 4px rgba(245, 127, 23, 0.15);
+        }
+
+        .badge--chef {
+            background: linear-gradient(135deg, #E8F5E9, #A5D6A7);
+            color: #2E7D32;
+            box-shadow: 0 1px 4px rgba(46, 125, 50, 0.15);
+        }
+
+        /* ---------- Diet indicator pills ---------- */
+        .pill--spicy {
+            background: #FBE9E7;
+            color: #D84315;
+            border-color: rgba(216, 67, 21, 0.15);
+        }
+
+        .pill--veggie {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border-color: rgba(46, 125, 50, 0.15);
+        }
+
+        /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+        .footer {
+            text-align: center;
+            padding: 28px 20px 8px;
+        }
+
+        .footer__hours {
+            font-size: 13px;
+            color: var(--color-text-muted);
+        }
+
+        .footer__hours strong {
+            color: var(--color-text-sec);
+        }
+
+        .footer__addr {
+            font-size: 12px;
+            color: var(--color-text-muted);
+            margin-top: 4px;
+        }
+
+        .footer__copy {
+            margin-top: 16px;
+            font-size: 11px;
+            color: var(--color-text-muted);
+            opacity: 0.5;
+        }
+
+        /* ==========================================================================
+       FAB — "Leave us a Review"
+       ========================================================================== */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+            background: linear-gradient(135deg, var(--color-orange) 0%, var(--color-orange-dk) 100%);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-fab);
+            transition: all 0.3s var(--ease);
+            white-space: nowrap;
+            text-decoration: none;
+        }
+
+        .fab:hover {
+            transform: translateX(-50%) translateY(-3px);
+            box-shadow: 0 8px 32px rgba(255, 143, 0, 0.5), 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .fab:active {
+            transform: translateX(-50%) scale(0.97);
+        }
+
+        .fab__star {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        /* Pulse ring */
+        .fab::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, var(--color-orange), var(--color-orange-dk));
+            opacity: 0;
+            z-index: -1;
+            animation: fab-ring 2.5s ease-in-out infinite;
+        }
+
+        @keyframes fab-ring {
+
+            0%,
+            100% {
                 opacity: 0;
-                transform: translateY(40px);
+                transform: scale(1);
             }
 
-            100% {
+            50% {
+                opacity: 0.18;
+                transform: scale(1.1);
+            }
+        }
+
+        /* ==========================================================================
+       ENTRANCE ANIMATIONS (GPU-accelerated, 60fps)
+       ========================================================================== */
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .card-animate {
-            opacity: 0;
-            animation: fadeInUp 0.7s ease-out forwards;
-        }
-
-        .card-animate:nth-child(1) {
-            animation-delay: 0.1s;
-        }
-
-        .card-animate:nth-child(2) {
-            animation-delay: 0.25s;
-        }
-
-        .card-animate:nth-child(3) {
-            animation-delay: 0.4s;
-        }
-
-        .card-animate:nth-child(4) {
-            animation-delay: 0.55s;
-        }
-
-        .card-animate:nth-child(5) {
-            animation-delay: 0.7s;
-        }
-
-        .card-animate:nth-child(6) {
-            animation-delay: 0.85s;
-        }
-
-        /* ── Card Active Press Effect ────────────────── */
-        .card-press {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .card-press:active {
-            transform: scale(0.97);
-        }
-
-        .card-press:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 30px rgba(245, 158, 11, 0.12);
-        }
-
-        /* ── Gold Gradient Divider ───────────────────── */
-        .gold-line {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #f59e0b, transparent);
-        }
-
-        /* ── Sticky Nav Glass ────────────────────────── */
-        .nav-glass {
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            background: rgba(9, 9, 11, 0.78);
-            border-bottom: 1px solid rgba(245, 158, 11, 0.15);
-        }
-
-        /* ── Nav link active state ───────────────────── */
-        .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #f59e0b;
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover::after,
-        .nav-link.active::after {
-            width: 100%;
-        }
-
-        .nav-link:hover,
-        .nav-link.active {
-            color: #f59e0b;
-        }
-
-        /* ── WhatsApp Button Glow ────────────────────── */
-        .wa-btn {
-            background: linear-gradient(135deg, #25d366, #128c7e);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.25);
-        }
-
-        .wa-btn:hover {
-            box-shadow: 0 6px 25px rgba(37, 211, 102, 0.45);
-            transform: translateY(-2px);
-        }
-
-        .wa-btn:active {
-            transform: translateY(0) scale(0.97);
-        }
-
-        /* ── Badge Shimmer ───────────────────────────── */
-        @keyframes shimmer {
-            0% {
-                background-position: -200% center;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.98);
             }
 
-            100% {
-                background-position: 200% center;
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
             }
         }
 
-        .badge-shimmer {
-            background: linear-gradient(90deg, #f59e0b, #fbbf24, #f59e0b);
-            background-size: 200% auto;
-            animation: shimmer 3s linear infinite;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* ── Hero Parallax Overlay ────────────────────── */
-        .hero-overlay {
-            background: linear-gradient(180deg, rgba(9, 9, 11, 0.3) 0%, rgba(9, 9, 11, 0.85) 60%, #09090b 100%);
-        }
-
-        /* ── Scrollbar Custom ────────────────────────── */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #09090b;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #f59e0b;
-            border-radius: 3px;
-        }
-
-        /* ── Image Overlay ───────────────────────────── */
-        .img-overlay {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .img-overlay::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(0deg, rgba(9, 9, 11, 0.7) 0%, transparent 60%);
-        }
-
-        .img-overlay img {
-            transition: transform 0.5s ease;
-        }
-
-        .img-overlay:hover img {
-            transform: scale(1.05);
-        }
-
-        /* ── Section Fade-in on Scroll (JS powered) ── */
-        .section-reveal {
+        /* Cards start invisible; JS adds .card--visible to trigger animation */
+        .card {
             opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            will-change: transform, opacity;
         }
 
-        .section-reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
+        .card--visible {
+            animation: slideUpFade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        /* Welcome banner entrance */
+        .welcome {
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+        }
+
+        /* ==========================================================================
+       RESPONSIVE
+       ========================================================================== */
+        @media (min-width:400px) {
+            .card__img-wrap {
+                width: 96px;
+                height: 96px;
+            }
+
+            .card__name {
+                font-size: 16px;
+            }
+        }
+
+        @media (min-width:480px) {
+            .card__img-wrap {
+                width: 110px;
+                height: 110px;
+            }
+
+            .card__desc {
+                font-size: 14px;
+            }
+        }
+
+        @media (min-width:768px) {
+            .main {
+                padding: 24px 24px;
+            }
+
+            .header__name {
+                font-size: 24px;
+            }
+
+            .card__img-wrap {
+                width: 130px;
+                height: 130px;
+                border-radius: var(--radius-md);
+            }
         }
     </style>
 </head>
 
-<body class="antialiased">
+<body>
 
-    <!-- ═══════════════════════════════════════════════
-         NAVBAR (Sticky / Glass)
-         ═══════════════════════════════════════════════ -->
-    <nav id="navbar" class="nav-glass fixed top-0 left-0 right-0 z-50">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="flex items-center justify-between h-16">
-                <!-- Logo -->
-                <a href="#hero" class="flex items-center gap-2">
-                    <span class="text-gold-500 text-2xl">✦</span>
-                    <span class="font-display text-lg sm:text-xl font-semibold tracking-wide text-white">Esther <span
-                            class="text-gold-500">Banquetes</span></span>
-                </a>
-
-                <!-- Nav Links -->
-                <div class="flex items-center gap-3 sm:gap-6 text-sm font-medium text-zinc-400">
-                    <a href="#bodas" class="nav-link hidden sm:inline">💍 Bodas</a>
-                    <a href="#xv" class="nav-link hidden sm:inline">👑 XV Años</a>
-                    <a href="#graduaciones" class="nav-link hidden sm:inline">🎓 Eventos</a>
-                    <!-- Mobile icons -->
-                    <a href="#bodas" class="nav-link sm:hidden text-lg">💍</a>
-                    <a href="#xv" class="nav-link sm:hidden text-lg">👑</a>
-                    <a href="#graduaciones" class="nav-link sm:hidden text-lg">🎓</a>
-                </div>
-            </div>
+    <!-- ================================================================
+       HEADER
+       ================================================================ -->
+    <header class="header" id="header">
+        <div class="header__row">
+            <span class="header__logo">🦆</span>
+            <h1 class="header__name">Restaurante El Pato</h1>
         </div>
+        <p class="header__tag">Authentic Mexican Food since 1999</p>
+    </header>
+
+    <!-- ================================================================
+       CATEGORY TABS
+       ================================================================ -->
+    <nav class="tabs" id="tabs">
+        <ul class="tabs__list" role="tablist">
+            <li><button class="tab tab--active" role="tab" aria-selected="true" data-cat="breakfast"><span
+                        class="tab__emoji">🍳</span> Breakfast</button></li>
+            <li><button class="tab" role="tab" aria-selected="false" data-cat="tortas"><span
+                        class="tab__emoji">🥖</span> Tortas</button></li>
+            <li><button class="tab" role="tab" aria-selected="false" data-cat="tacos-mains"><span
+                        class="tab__emoji">🌮</span> Tacos &amp; Mains</button></li>
+            <li><button class="tab" role="tab" aria-selected="false" data-cat="soups"><span class="tab__emoji">🍲</span>
+                    Soups</button></li>
+        </ul>
     </nav>
 
+    <!-- ================================================================
+       MAIN
+       ================================================================ -->
+    <main class="main">
 
-    <!-- ═══════════════════════════════════════════════
-         HERO SECTION
-         ═══════════════════════════════════════════════ -->
-    <section id="hero" class="relative min-h-[85vh] sm:min-h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Image -->
-        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1600&q=80" alt="Banquete elegante"
-            class="absolute inset-0 w-full h-full object-cover">
-        <!-- Overlay -->
-        <div class="hero-overlay absolute inset-0"></div>
-
-        <!-- Content -->
-        <div class="relative z-10 text-center px-6 max-w-3xl">
-            <!-- Dynamic Greeting -->
-            <p id="greeting"
-                class="text-gold-400 text-sm sm:text-base font-medium tracking-widest uppercase mb-4 opacity-0 transition-opacity duration-700">
-            </p>
-
-            <h1 class="font-display text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6">
-                Hacemos de tu evento un <span class="text-gold-500 italic">momento inolvidable</span>
-            </h1>
-            <p class="text-zinc-300 text-base sm:text-lg max-w-xl mx-auto mb-8 leading-relaxed">
-                Más de 15 años creando experiencias gastronómicas únicas. Conoce nuestros paquetes y solicita tu
-                cotización personalizada.
-            </p>
-
-            <a href="#bodas"
-                class="inline-flex items-center gap-2 bg-gold-500 hover:bg-gold-600 text-zinc-950 font-semibold px-8 py-3.5 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/20 hover:-translate-y-0.5 active:scale-95">
-                <span>Ver Paquetes</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-            </a>
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════════
-         SECCIÓN 1 — BODAS DE ENSUEÑO
-         ═══════════════════════════════════════════════ -->
-    <section id="bodas" class="pt-24 pb-16 px-4 sm:px-6 section-reveal">
-        <div class="max-w-6xl mx-auto">
-            <!-- Section Header -->
-            <div class="text-center mb-14">
-                <span class="text-4xl mb-3 block">💍</span>
-                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3">Bodas de Ensueño</h2>
-                <p class="text-zinc-400 max-w-md mx-auto text-sm sm:text-base">Cada detalle cuenta para el día más
-                    especial de tu vida. Déjalo en nuestras manos.</p>
-                <div class="gold-line max-w-xs mx-auto mt-6"></div>
-            </div>
-
-            <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                <!-- CARD 1 — Menú Imperial -->
-                <div
-                    class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-56 sm:h-64">
-                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80"
-                            alt="Menú Imperial 3 Tiempos" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 sm:p-8">
-                        <!-- Badge -->
-                        <span
-                            class="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                            👑 Premium
-                        </span>
-                        <h3 class="font-display text-xl sm:text-2xl font-semibold mb-3">Menú Imperial 3 Tiempos</h3>
-                        <ul class="text-zinc-400 text-sm space-y-2 mb-6">
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Crema de
-                                elote trufada con crotones dorados</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Pechuga
-                                rellena de queso y espinaca en salsa de champiñones</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Guarnición de
-                                arroz al azafrán y verduras al grill</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Loza,
-                                cristalería, mantelería y meseros incluidos</li>
-                        </ul>
-                        <button onclick="cotizarWhatsApp('Menú Imperial 3 Tiempos — Bodas')"
-                            class="wa-btn w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl text-sm">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                                <path
-                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                            </svg>
-                            Cotizar por WhatsApp
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CARD 2 — Boda Tradicional -->
-                <div
-                    class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-56 sm:h-64">
-                        <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80"
-                            alt="Boda Tradicional" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 sm:p-8">
-                        <span
-                            class="inline-flex items-center gap-1 bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                            🤍 Clásico
-                        </span>
-                        <h3 class="font-display text-xl sm:text-2xl font-semibold mb-3">Boda Tradicional</h3>
-                        <ul class="text-zinc-400 text-sm space-y-2 mb-6">
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Menú clásico
-                                de 2 tiempos: consomé y plato fuerte</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Plato fuerte:
-                                mole poblano o tinga con arroz rojo</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Loza
-                                completa, cristalería y meseros incluidos</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Servicio de
-                                hasta 5 horas continuas</li>
-                        </ul>
-                        <button onclick="cotizarWhatsApp('Boda Tradicional — Bodas')"
-                            class="wa-btn w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl text-sm">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                                <path
-                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                            </svg>
-                            Cotizar por WhatsApp
-                        </button>
-                    </div>
-                </div>
-
+        <!-- Welcome -->
+        <div class="welcome">
+            <span class="welcome__icon" id="greetIcon">👋</span>
+            <div>
+                <p class="welcome__title" id="greetTitle">Welcome to El Pato!</p>
+                <p class="welcome__sub">Browse our menu and order with your server.</p>
             </div>
         </div>
-    </section>
 
-
-    <!-- ═══════════════════════════════════════════════
-         SECCIÓN 2 — XV AÑOS INOLVIDABLES
-         ═══════════════════════════════════════════════ -->
-    <section id="xv" class="pt-24 pb-16 px-4 sm:px-6 section-reveal">
-        <div class="max-w-6xl mx-auto">
-            <!-- Section Header -->
-            <div class="text-center mb-14">
-                <span class="text-4xl mb-3 block">👑</span>
-                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3">XV Años Inolvidables</h2>
-                <p class="text-zinc-400 max-w-md mx-auto text-sm sm:text-base">Una celebración a la altura de tus
-                    sueños. Haz que su noche brille con elegancia.</p>
-                <div class="gold-line max-w-xs mx-auto mt-6"></div>
+        <!-- ==================== BREAKFAST ==================== -->
+        <section class="section" id="breakfast">
+            <div class="section__head">
+                <span class="section__emoji">🍳</span>
+                <h2 class="section__title">Breakfast</h2>
+                <span class="section__badge">2 items</span>
             </div>
 
-            <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                <!-- CARD 3 — Buffet Estelar Juvenil -->
-                <div
-                    class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-56 sm:h-64">
-                        <img src="https://images.unsplash.com/photo-1555244162-803834f70033?w=800&q=80"
-                            alt="Buffet Estelar Juvenil" class="w-full h-full object-cover">
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="eggs_ranchero.png" alt="Huevos Rancheros" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Huevos Rancheros</h3>
+                        <span class="card__price">$18.38</span>
                     </div>
-                    <div class="p-6 sm:p-8">
-                        <span
-                            class="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                            ⭐ Más Solicitado
-                        </span>
-                        <h3 class="font-display text-xl sm:text-2xl font-semibold mb-3">Buffet Estelar Juvenil</h3>
-                        <ul class="text-zinc-400 text-sm space-y-2 mb-6">
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Estación de
-                                snacks: mini hamburguesas, nuggets gourmet y alitas BBQ</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Pastas al
-                                momento con 3 tipos de salsa</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Fuente de
-                                chocolate con frutas y marshmallows</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Servicio de
-                                meseros y barra de aguas frescas</li>
-                        </ul>
-                        <button onclick="cotizarWhatsApp('Buffet Estelar Juvenil — XV Años')"
-                            class="wa-btn w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl text-sm">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                                <path
-                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                            </svg>
-                            Cotizar por WhatsApp
-                        </button>
+                    <p class="card__desc">Served with rice, beans, and fresh tortillas.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="chilaquiles_verdes.png" alt="Chilaquiles Verdes" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Chilaquiles Verdes</h3>
+                        <span class="card__price">$20.72</span>
+                    </div>
+                    <p class="card__desc">Tortilla chips in green salsa, sour cream, cheese, and eggs.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--veggie">🌱 Vegetarian</span>
                     </div>
                 </div>
+            </article>
+        </section>
 
-                <!-- CARD 4 — Cena de Gala XV -->
-                <div
-                    class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-56 sm:h-64">
-                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=800&q=80"
-                            alt="Cena de Gala XV" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 sm:p-8">
-                        <span
-                            class="inline-flex items-center gap-1 bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                            🌟 Elegante
-                        </span>
-                        <h3 class="font-display text-xl sm:text-2xl font-semibold mb-3">Cena de Gala XV</h3>
-                        <ul class="text-zinc-400 text-sm space-y-2 mb-6">
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Menú formal
-                                de 3 tiempos: entrada, plato fuerte y postre</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Coctelería
-                                sin alcohol: mocktails y sodas artesanales</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Mantelería
-                                premium con centros de mesa florales</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Servicio de
-                                meseros uniformalos y capitán de evento</li>
-                        </ul>
-                        <button onclick="cotizarWhatsApp('Cena de Gala XV — XV Años')"
-                            class="wa-btn w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl text-sm">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                                <path
-                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                            </svg>
-                            Cotizar por WhatsApp
-                        </button>
-                    </div>
-                </div>
-
+        <!-- ==================== TORTAS ==================== -->
+        <section class="section" id="tortas">
+            <div class="section__head">
+                <span class="section__emoji">🥖</span>
+                <h2 class="section__title">Tortas</h2>
+                <span class="section__badge">2 items</span>
             </div>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="cubana_torta.png" alt="Cubana Torta" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Cubana Torta <span class="badge badge--bestseller">👑 Bestseller</span>
+                        </h3>
+                        <span class="card__price">$21.10</span>
+                    </div>
+                    <p class="card__desc">Milanesa, ham, cheese, egg, avocado on a fresh telera roll.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--green">🥑 Avocado</span>
+                        <span class="pill pill--red">🥩 Milanesa</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="hawaiian_torta.png" alt="Hawaiian Torta" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Hawaiian Torta</h3>
+                        <span class="card__price">$21.10</span>
+                    </div>
+                    <p class="card__desc">Ham, pineapple, and melted cheese with spicy chipotle.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--amber">🍍 Pineapple</span>
+                        <span class="pill pill--red">🌶️ Chipotle</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- ==================== TACOS & MAINS ==================== -->
+        <section class="section" id="tacos-mains">
+            <div class="section__head">
+                <span class="section__emoji">🌮</span>
+                <h2 class="section__title">Tacos &amp; Mains</h2>
+                <span class="section__badge">4 items</span>
+            </div>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="tacos_dorados.png" alt="Tacos Dorados" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Tacos Dorados (3 pcs)</h3>
+                        <span class="card__price">$14.83</span>
+                    </div>
+                    <p class="card__desc">Crispy tacos filled with beef or chicken, lettuce, cream.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="shrimp_tacos.png" alt="Shrimp Tacos" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Shrimp Tacos (2 pcs)</h3>
+                        <span class="card__price">$19.50</span>
+                    </div>
+                    <p class="card__desc">Grilled shrimp on corn tortillas with chipotle slaw.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--red">🦐 Shrimp</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="carne_asada.png" alt="Carne Asada Plate" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Carne Asada Plate <span class="badge badge--chef">👨‍🍳 Chef's
+                                Pick</span></h3>
+                        <span class="card__price">$24.50</span>
+                    </div>
+                    <p class="card__desc">Charbroiled steak served with rice, beans, guacamole.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--green">🥑 Guacamole</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="enchiladas_suizas.png" alt="Enchiladas Suizas" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Enchiladas Suizas</h3>
+                        <span class="card__price">$19.95</span>
+                    </div>
+                    <p class="card__desc">Three chicken enchiladas in green sauce with melted Swiss cheese.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--spicy">🌶️ Spicy</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- ==================== SOUPS ==================== -->
+        <section class="section" id="soups">
+            <div class="section__head">
+                <span class="section__emoji">🍲</span>
+                <h2 class="section__title">Soups</h2>
+                <span class="section__badge">2 items</span>
+            </div>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="caldo_de_res.png" alt="Caldo de Res" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Caldo de Res</h3>
+                        <span class="card__price">$21.93</span>
+                    </div>
+                    <p class="card__desc">Hearty beef soup with fresh vegetables, served with rice.</p>
+                </div>
+            </article>
+
+            <article class="card">
+                <div class="card__img-wrap">
+                    <img class="card__img" src="menudo_soup.png" alt="Menudo" loading="lazy">
+                </div>
+                <div class="card__body">
+                    <div class="card__top">
+                        <h3 class="card__name">Menudo</h3>
+                        <span class="card__price">$18.99</span>
+                    </div>
+                    <p class="card__desc">Traditional spicy tripe soup with hominy and lime.</p>
+                    <div class="card__pills">
+                        <span class="pill pill--amber">📅 Weekends Only</span>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="footer__hours"><strong>Mon – Sun</strong> &nbsp; 7:00 AM – 10:00 PM</p>
+            <p class="footer__addr">📍 California · Dine-in · Pickup · Delivery</p>
+            <p class="footer__copy">© 2026 Restaurante El Pato. All rights reserved.</p>
         </div>
-    </section>
 
+    </main>
 
-    <!-- ═══════════════════════════════════════════════
-         SECCIÓN 3 — GRADUACIONES Y EVENTOS
-         ═══════════════════════════════════════════════ -->
-    <section id="graduaciones" class="pt-24 pb-16 px-4 sm:px-6 section-reveal">
-        <div class="max-w-6xl mx-auto">
-            <!-- Section Header -->
-            <div class="text-center mb-14">
-                <span class="text-4xl mb-3 block">🎓</span>
-                <h2 class="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3">Graduaciones y Eventos</h2>
-                <p class="text-zinc-400 max-w-md mx-auto text-sm sm:text-base">Desde cenas de graduación hasta coffee
-                    breaks corporativos. Nos adaptamos a ti.</p>
-                <div class="gold-line max-w-xs mx-auto mt-6"></div>
-            </div>
+    <!-- ================================================================
+       FAB — Leave us a Review
+       ================================================================ -->
+    <a class="fab" id="fab" href="https://maps.app.goo.gl/RVk1w82HyaYtYM9p8" target="_blank" rel="noopener noreferrer"
+        aria-label="Leave us a Review">
+        <span class="fab__star">⭐</span> Leave us a Review!
+    </a>
 
-            <!-- Cards Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
-                <!-- CARD 5 — Noche de Graduación -->
-                <div
-                    class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-56 sm:h-64">
-                        <img src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?w=800&q=80"
-                            alt="Noche de Graduación" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 sm:p-8">
-                        <span
-                            class="inline-flex items-center gap-1 bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                            🎉 Celebración
-                        </span>
-                        <h3 class="font-display text-xl sm:text-2xl font-semibold mb-3">Noche de Graduación</h3>
-                        <ul class="text-zinc-400 text-sm space-y-2 mb-6">
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Cena formal
-                                de 2 tiempos: crema y plato fuerte a elegir</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Barra de
-                                mezcladores: refrescos, hielos y vasos</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Servicio
-                                continuo de hasta 6 horas</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Meseros,
-                                loza, cristalería y mantelería incluidos</li>
-                        </ul>
-                        <button onclick="cotizarWhatsApp('Noche de Graduación — Graduaciones')"
-                            class="wa-btn w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl text-sm">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                                <path
-                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                            </svg>
-                            Cotizar por WhatsApp
-                        </button>
-                    </div>
-                </div>
-
-                <!-- CARD 6 — Coffee Break Corporativo -->
-                <div
-                    class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-56 sm:h-64">
-                        <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80"
-                            alt="Coffee Break Corporativo" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-6 sm:p-8">
-                        <span
-                            class="inline-flex items-center gap-1 bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-semibold px-3 py-1 rounded-full mb-4">
-                            💼 Corporativo
-                        </span>
-                        <h3 class="font-display text-xl sm:text-2xl font-semibold mb-3">Coffee Break Corporativo</h3>
-                        <ul class="text-zinc-400 text-sm space-y-2 mb-6">
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Café de
-                                especialidad: americano, cappuccino y latte</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Panadería
-                                mini: cuernos, daneses y muffins artesanales</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Fruta fresca
-                                de temporada y jugos naturales</li>
-                            <li class="flex items-start gap-2"><span class="text-gold-500 mt-0.5">✦</span> Ideal para
-                                juntas, conferencias y capacitaciones</li>
-                        </ul>
-                        <button onclick="cotizarWhatsApp('Coffee Break Corporativo — Eventos')"
-                            class="wa-btn w-full flex items-center justify-center gap-2 text-white font-semibold py-3.5 rounded-xl text-sm">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                                <path
-                                    d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                            </svg>
-                            Cotizar por WhatsApp
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-
-                <p class="text-zinc-400 max-w-md mx-auto text-sm sm:text-base">From refreshing aguas frescas to handcrafted cocktails. The perfect companion to your meal.</p>
-                <div class="gold-line max-w-xs mx-auto mt-6"></div>
-            </div>
-
-            <!-- ─── Sub-category: Aguas Frescas & Sodas ─── -->
-            <h3 class="font-display text-xl sm:text-2xl font-semibold mb-6 flex items-center gap-2">
-                <span class="text-gold-500">✦</span> Aguas Frescas & Sodas
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
-
-                <!-- Drink 1: Horchata -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="horchata.png" alt="Agua de Horchata" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <span class="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                            👑 Bestseller
-                        </span>
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Agua de Horchata</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$4.50</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Traditional sweet rice and cinnamon drink.</p>
-                    </div>
-                </div>
-
-                <!-- Drink 2: Jamaica -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="agua_jamaica.png" alt="Agua de Jamaica" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Agua de Jamaica</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$4.50</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Refreshing cold hibiscus tea.</p>
-                    </div>
-                </div>
-
-                <!-- Drink 3: Mexican Coke -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="mexican_coke.png" alt="Mexican Coke" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <span class="inline-flex items-center gap-1 bg-zinc-800 border border-zinc-700 text-zinc-300 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                            ⭐ Classic
-                        </span>
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Mexican Coke</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$3.99</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Classic glass bottle with real cane sugar.</p>
-                    </div>
-                </div>
-
-                <!-- Drink 4: Jarritos -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="jarritos.png" alt="Jarritos" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Jarritos</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$3.50</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Assorted flavors (Tamarind, Mandarin, Fruit Punch).</p>
-                    </div>
-                </div>
-
-                <!-- Drink 5: Sidral Mundet -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="sidral_mundet.png" alt="Sidral Mundet" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Sidral Mundet</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$3.50</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Apple soda.</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ─── Sub-category: Hot Drinks ─── -->
-            <h3 class="font-display text-xl sm:text-2xl font-semibold mb-6 flex items-center gap-2">
-                <span class="text-gold-500">✦</span> Hot Drinks (Café)
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
-
-                <!-- Drink 6: Café de Olla -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="cafe_de_olla.png" alt="Café de Olla" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <span class="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                            ☕ Morning Favorite
-                        </span>
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Café de Olla</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$3.99</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Traditional Mexican coffee with cinnamon and piloncillo.</p>
-                    </div>
-                </div>
-
-                <!-- Drink 7: Champurrado -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="champurrado.png" alt="Champurrado" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Champurrado</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$4.99</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Thick, warm chocolate-based Mexican drink.</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ─── Sub-category: Cervezas Frias ─── -->
-            <h3 class="font-display text-xl sm:text-2xl font-semibold mb-6 flex items-center gap-2">
-                <span class="text-gold-500">✦</span> Cervezas Frias (Imported)
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-14">
-
-                <!-- Drink 8: Modelo -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-40">
-                        <img src="mexican_beers.png" alt="Modelo Especial" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Modelo Especial</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$6.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Drink 9: Corona -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-40">
-                        <img src="mexican_beers.png" alt="Corona Extra" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Corona Extra</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$6.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Drink 10: Victoria -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-40">
-                        <img src="mexican_beers.png" alt="Victoria" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Victoria</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$6.00</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Drink 11: Pacífico -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-40">
-                        <img src="mexican_beers.png" alt="Pacífico" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Pacífico</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$6.00</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- ─── Sub-category: Cocktails & Specialties ─── -->
-            <h3 class="font-display text-xl sm:text-2xl font-semibold mb-6 flex items-center gap-2">
-                <span class="text-gold-500">✦</span> Cocktails & Specialties
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-
-                <!-- Drink 12: Classic Margarita -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="classic_margarita.png" alt="Classic Margarita" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <span class="inline-flex items-center gap-1 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                            🍋 House Special
-                        </span>
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Classic Margarita</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$10.50</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Tequila, fresh lime juice, agave, salt rim.</p>
-                    </div>
-                </div>
-
-                <!-- Drink 13: Michelada -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="michelada.png" alt="Michelada" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <span class="inline-flex items-center gap-1 bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                            🌶️ Spicy
-                        </span>
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Michelada</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$9.50</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Your choice of beer with Clamato, lime, and our special spicy rim.</p>
-                    </div>
-                </div>
-
-                <!-- Drink 14: Cantarito -->
-                <div class="card-animate card-press bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden group">
-                    <div class="img-overlay h-44">
-                        <img src="cantarito.png" alt="Cantarito" class="w-full h-full object-cover">
-                    </div>
-                    <div class="p-5">
-                        <div class="flex items-start justify-between gap-2 mb-1">
-                            <h4 class="font-semibold text-base">Cantarito</h4>
-                            <span class="text-gold-500 font-bold text-base whitespace-nowrap">$12.00</span>
-                        </div>
-                        <p class="text-zinc-400 text-sm">Tequila with fresh citrus juices and grapefruit soda in a clay cup.</p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════════
-         CTA FINAL
-         ═══════════════════════════════════════════════ -->
-    <section class="py-20 px-4 sm:px-6 section-reveal">
-        <div class="max-w-3xl mx-auto text-center">
-            <div class="bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 rounded-3xl p-10 sm:p-14">
-                <span class="text-5xl mb-4 block">✨</span>
-                <h2 class="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-4">¿Listo para hacer tu evento
-                    <span class="text-gold-500 italic">inolvidable</span>?
-                </h2>
-                <p class="text-zinc-400 mb-8 max-w-md mx-auto text-sm sm:text-base">
-                    Escríbenos por WhatsApp y recibe una cotización personalizada sin compromiso. Atención inmediata.
-                </p>
-                <a href="https://wa.me/527121959423?text=Hola%20Esther%20Banquetes%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20sus%20paquetes."
-                    target="_blank" rel="noopener noreferrer"
-                    class="wa-btn inline-flex items-center gap-3 text-white font-semibold px-10 py-4 rounded-full text-base">
-                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
-                        <path
-                            d="M12 0C5.373 0 0 5.373 0 12c0 2.117.553 4.106 1.516 5.834L.053 23.52a.5.5 0 00.607.607l5.687-1.463A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-1.94 0-3.79-.534-5.397-1.54l-.387-.232-4.013 1.032 1.052-3.843-.254-.405A9.72 9.72 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z" />
-                    </svg>
-                    Solicitar Cotización Ahora
-                </a>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- ═══════════════════════════════════════════════
-         FOOTER
-         ═══════════════════════════════════════════════ -->
-    <footer class="border-t border-zinc-800/50 py-10 px-4 sm:px-6">
-        <div
-            class="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-zinc-500">
-            <p class="flex items-center gap-1.5">
-                <span class="text-gold-500">✦</span>
-                <span class="font-display font-medium text-zinc-300">Esther Banquetes</span>
-                <span>— Todos los derechos reservados © <span id="year"></span></span>
-            </p>
-            <p class="text-zinc-600 text-xs">Diseñado con ♡ por BAM LABS</p>
-        </div>
-    </footer>
-
-
-    <!-- ═══════════════════════════════════════════════
-         JAVASCRIPT
-         ═══════════════════════════════════════════════ -->
+    <!-- ================================================================
+       JAVASCRIPT — Micro-interactions & Animation Engine
+       ================================================================ -->
     <script>
-            // ── Dynamic Greeting ────────────────────────────
-            (function setGreeting() {
-                const hour = new Date().getHours();
-                const el = document.getElementById('greeting');
-                let msg = '';
+        /* =============================================================
+           1. HEADER — Shadow on scroll
+           ============================================================= */
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('header--shadow', scrollY > 8);
+        }, { passive: true });
 
-                if (hour >= 5 && hour < 12) {
-                    msg = '☀️ ¡Buenos días! Bienvenido(a) a Esther Banquetes';
-                } else if (hour >= 12 && hour < 19) {
-                    msg = '🌤️ ¡Buenas tardes! Bienvenido(a) a Esther Banquetes';
-                } else {
-                    msg = '🌙 ¡Buenas noches! Bienvenido(a) a Esther Banquetes';
+        /* =============================================================
+           2. STAGGERED CASCADE ENTRANCE (slideUpFade)
+              Cards start with opacity:0 via CSS.
+              JS adds .card--visible with an increasing delay
+              so they appear one-by-one like a waterfall.
+           ============================================================= */
+        const STAGGER = 70; // ms between each card
+
+        function revealCards() {
+            const cards = document.querySelectorAll('.card:not(.card--visible)');
+            cards.forEach((card, i) => {
+                // Only animate cards currently in or near the viewport
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight + 60) {
+                    card.style.animationDelay = `${i * STAGGER}ms`;
+                    card.classList.add('card--visible');
                 }
-
-                el.textContent = msg;
-                // Trigger fade-in
-                setTimeout(() => { el.style.opacity = '1'; }, 300);
-            })();
-
-        // ── Year in Footer ──────────────────────────────
-        document.getElementById('year').textContent = new Date().getFullYear();
-
-        // ── WhatsApp CTA Function ───────────────────────
-        function cotizarWhatsApp(paquete) {
-            const phone = '527121959423';
-            const message = encodeURIComponent(
-                `Hola Esther Banquetes 👋\n\nMe interesa cotizar el paquete: *${paquete}*\n\n¿Me podrían dar más información, por favor?`
-            );
-            window.open(`https://wa.me/${phone}?text=${message}`, '_blank');
+            });
         }
 
-        // ── Section Reveal on Scroll ────────────────────
-        const revealSections = document.querySelectorAll('.section-reveal');
-
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
+        // Initial reveal on page load (after paint)
+        requestAnimationFrame(() => {
+            requestAnimationFrame(revealCards);
         });
 
-        revealSections.forEach(section => revealObserver.observe(section));
+        // Reveal remaining cards as user scrolls into new sections
+        const cardObserver = new IntersectionObserver(entries => {
+            let needsReveal = false;
+            entries.forEach(e => { if (e.isIntersecting) needsReveal = true; });
+            if (needsReveal) revealCards();
+        }, { rootMargin: '0px 0px 60px 0px', threshold: 0.1 });
+        document.querySelectorAll('.card').forEach(c => cardObserver.observe(c));
 
-        // ── Active Nav Link on Scroll ───────────────────
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
+        /* =============================================================
+           3. CATEGORY TABS — Click to scroll + Scroll Spy
+           ============================================================= */
+        const allTabs = document.querySelectorAll('.tab');
+        const tabBar = document.querySelector('.tabs__list');
 
-        window.addEventListener('scroll', () => {
-            let current = '';
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 120;
-                if (window.scrollY >= sectionTop) {
-                    current = section.getAttribute('id');
+        // Auto-center the active tab pill inside the scrollable bar
+        function centerActiveTab(tab) {
+            tab.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+
+        // Click handler → smooth scroll to section
+        allTabs.forEach(t => {
+            t.addEventListener('click', () => {
+                allTabs.forEach(b => {
+                    b.classList.remove('tab--active');
+                    b.setAttribute('aria-selected', 'false');
+                });
+                t.classList.add('tab--active');
+                t.setAttribute('aria-selected', 'true');
+
+                const sec = document.getElementById(t.dataset.cat);
+                if (sec) {
+                    const y = sec.getBoundingClientRect().top + scrollY - 130;
+                    scrollTo({ top: y, behavior: 'smooth' });
                 }
-            });
-
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('active');
-                }
+                centerActiveTab(t);
             });
         });
+
+        // Scroll Spy — highlight the tab whose section is in view
+        const sections = document.querySelectorAll('.section');
+        const spyObserver = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    allTabs.forEach(b => {
+                        const match = b.dataset.cat === e.target.id;
+                        b.classList.toggle('tab--active', match);
+                        b.setAttribute('aria-selected', String(match));
+                        if (match) centerActiveTab(b);
+                    });
+                }
+            });
+        }, { rootMargin: '-130px 0px -55% 0px', threshold: 0 });
+        sections.forEach(s => spyObserver.observe(s));
+
+        /* =============================================================
+           4. DYNAMIC GREETING — Based on client's local time
+           ============================================================= */
+        (function setGreeting() {
+            const h = new Date().getHours();
+            const icon = document.getElementById('greetIcon');
+            const title = document.getElementById('greetTitle');
+            if (h < 12) {
+                icon.textContent = '☕';
+                title.textContent = 'Good morning! Welcome to El Pato';
+            } else if (h < 18) {
+                icon.textContent = '☀️';
+                title.textContent = 'Good afternoon! Welcome to El Pato';
+            } else {
+                icon.textContent = '🌙';
+                title.textContent = 'Good evening! Welcome to El Pato';
+            }
+        })();
     </script>
 
 </body>
