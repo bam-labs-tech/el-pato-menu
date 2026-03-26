@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kitchen Monitor - El Pato</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { dark: { 800: '#1a1a1f', 900: '#111114', 950: '#09090b' } },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background: #09090b; color: #f4f4f5; }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { display: none; }
+        body { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .ticket-enter { animation: slideIn 0.35s ease-out forwards; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.97); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 min-h-screen flex flex-col">
+
+    <!-- ═══ KDS HEADER ═══ -->
+    <header class="bg-dark-900 border-b border-white/10 px-6 py-4 flex items-center justify-between shadow-lg sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <span class="text-4xl">👨‍🍳</span>
+            <div class="flex flex-col">
+                <h1 class="text-2xl font-black text-white tracking-tight leading-none">Kitchen Monitor</h1>
+                <p class="text-[11px] text-amber-500 font-bold tracking-[0.2em] uppercase mt-1">Restaurante El Pato</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-8">
+            <!-- Live Indicator -->
+            <div class="flex items-center gap-2.5 bg-dark-800 px-4 py-2 rounded-full border border-white/5 shadow-inner">
+                <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_12px_rgba(16,185,129,0.9)]"></div>
+                <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider">Live Sync</span>
+            </div>
+            
+            <!-- Clock -->
+            <div class="text-right border-l border-white/10 pl-6">
+                <div id="clockTime" class="text-3xl font-black text-white font-mono tracking-tighter leading-none">00:00:00</div>
+                <div id="clockDate" class="text-xs text-zinc-400 font-bold uppercase tracking-widest mt-1">Loading...</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ═══ MAIN BOARD ═══ -->
+    <main class="flex-1 p-6 overflow-y-auto">
+        <div id="ticketsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 items-start">
+            
+            <!-- Loader State -->
+            <div id="loadingMsg" class="col-span-full h-40 flex flex-col items-center justify-center text-zinc-500 gap-4 mt-20">
+                <svg class="animate-spin h-10 w-10 text-amber-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                <span class="font-bold text-xl tracking-tight text-zinc-400">Connecting to Webhook...</span>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ═══ SOUND ALERT ═══ -->
+    <audio id="bellSound" preload="auto">
+        <source src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" type="audio/ogg">
+    </audio>
+
+    <!-- ═══ KDS LOGIC ═══ -->
+    <script>
+        // ¡Aquí pegas la URL de tu backend que devuelve el JSON de órdenes!
+        const GOOGLE_SCRIPT_URL = 'AQUI_TU_URL_DE_GOOGLE'; 
+        
+        // Memoria volátil para detectar si el ticket ya sonó la campana hoy.
+        let knownOrderIds = new Set();
+        // Almacenamos el último fetch en memoria para poder redibujar al "completar" sin repreguntar a Google.
+        let ordersData = []; 
+
+        // 1. Reloj en tiempo real
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clockTime').textContent = now.toLocaleTimeString('en-US', { hour12: false });
+            document.getElementById('clockDate').textContent = now.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // 2. Motor de Fetch (Polling)
+        async function fetchOrders() {
+            try {
+                // Hacemos el GET al webhook
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                if (!response.ok) return; 
+                
+                // Extraemos el JSON (Tu Google Script debe retornar JSON estándar y headers CORS)
+                const data = await response.json();
+                
+                // Validamos que sea un arreglo de tickets
+                ordersData = Array.isArray(data) ? data : (data.orders || []);
+                
+                // Dibujamos
+                renderTickets(ordersData);
+                
+            } catch (error) {
+                console.error("Error sincronizando órdenes:", error);
+                // Mantenemos el UI si falla un ciclo (no borramos los tickets actuales)
+            }
+        }
+
+        // 3. Generación de las Tarjetas de Cocina (KDS)
+        function renderTickets(orders) {
+            const container = document.getElementById('ticketsContainer');
+            
+            // Leemos del disco duro local qué tickets ya cortó el cocinero
+            const completedIds = JSON.parse(localStorage.getItem('elPatoCompleted') || '[]');
+            
+            let hasNewTicket = false;
+            
+            // Filtramos las órdenes descartando las que ya completamos en esta tablet
+            const pendingOrders = orders.filter(o => !completedIds.includes(String(o.id)));
+            
+            // Si no hay órdenes pendientes
+            if (pendingOrders.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full h-80 flex flex-col items-center justify-center text-zinc-600 gap-5 mt-10">
+                        <span class="text-6xl opacity-40">🍽️</span>
+                        <h2 class="text-3xl font-black text-zinc-500">Kitchen is Clear</h2>
+                        <p class="text-lg font-medium text-zinc-600">Waiting for new incoming orders...</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Limpiamos el grid para redibujar
+            container.innerHTML = '';
+            
+            pendingOrders.forEach(order => {
+                const orderIdStr = String(order.id);
+                
+                // Si la tablet no conocía este ID... ¡suena la campana!
+                if (!knownOrderIds.has(orderIdStr)) {
+                    hasNewTicket = true;
+                    knownOrderIds.add(orderIdStr);
+                }
+                
+                // Parseamos el string del pedido separando por SALTOS DE LÍNEA
+                const rawItems = order.pedido ? order.pedido.split(/\\n|\\r\\n|\n/) : [];
+                
+                // Renderizamos la lista de platillos visualmente gigante
+                const itemsHtml = rawItems.filter(i => i.trim() !== '').map(item => {
+                    const cleanItem = item.trim();
+                    // Regex para capturar e iluminar el multiplicador (ej. "2x Tacos")
+                    const match = cleanItem.match(/^(\\d+x|\\d+ x)(.*)/i);
+                    if (match) {
+                        return `<li class="py-3 border-b border-zinc-200/60 last:border-0 flex items-start gap-3">
+                                    <span class="font-black text-amber-600 text-2xl leading-none mt-0.5">${match[1]}</span>
+                                    <span class="font-bold text-zinc-900 text-xl leading-snug">${match[2]}</span>
+                                </li>`;
+                    }
+                    return `<li class="py-3 border-b border-zinc-200/60 last:border-0 font-bold text-zinc-900 text-xl">${cleanItem}</li>`;
+                }).join('');
+                
+                // Creamos el DOM elemento del Ticket
+                const ticket = document.createElement('div');
+                ticket.className = 'ticket-enter bg-amber-50 rounded-b-2xl rounded-t-xl shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden border-2 border-amber-200';
+                
+                ticket.innerHTML = `
+                    <!-- Header Ticket Oscuro -->
+                    <div class="bg-dark-900 px-5 py-4 text-white flex items-center justify-between border-b-[6px] border-amber-500 shadow-sm relative overflow-hidden">
+                        <div class="z-10">
+                            <span class="text-[11px] text-zinc-400 font-bold uppercase tracking-widest block mb-0.5">Ticket ID</span>
+                            <span class="text-lg font-black text-white leading-none">#${order.id || 'N/A'}</span>
+                        </div>
+                        <div class="z-10 text-right">
+                            <span class="text-[11px] text-zinc-400 font-bold uppercase tracking-widest block mb-0.5">Time</span>
+                            <span class="text-lg font-bold text-zinc-200 leading-none">${order.fecha || 'Just now'}</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Nombre del Cliente (Alto Contraste) -->
+                    <div class="bg-amber-100 flex-none px-6 py-4 border-b border-amber-200">
+                        <p class="text-xs text-amber-900/60 font-black uppercase tracking-wider mb-1">Customer</p>
+                        <h3 class="text-3xl font-black text-zinc-900 tracking-tight leading-none">${order.cliente || order.nombre || 'Walk-in Guest'}</h3>
+                        
+                        ${order.notas ? `
+                        <div class="mt-3 bg-red-100/80 text-red-900 px-4 py-3 rounded-xl border-2 border-red-300 text-sm font-bold flex items-start gap-2 shadow-sm">
+                            <span class="text-red-600 block text-lg leading-none mt-0.5">⚠️</span> 
+                            <span>${order.notas}</span>
+                        </div>` : ''}
+                    </div>
+                    
+                    <!-- Lista de Productos Blanca -->
+                    <div class="p-6 flex-1 bg-white">
+                        <ul class="flex flex-col">
+                            ${itemsHtml}
+                        </ul>
+                    </div>
+                    
+                    <!-- Botón Gigante de Acción -->
+                    <div class="p-5 bg-amber-50 border-t border-amber-200/80 mt-auto">
+                        <button onclick="completeOrder('${orderIdStr}')" class="w-full py-5 bg-emerald-500 hover:bg-emerald-600 active:scale-[0.98] transition-all text-white font-black text-xl rounded-xl shadow-[0_6px_20px_rgba(16,185,129,0.35)] flex items-center justify-center gap-3 border-2 border-emerald-400">
+                            <span class="text-2xl leading-none">✅</span> 
+                            <span>COMPLETAR ORDEN</span>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(ticket);
+            });
+            
+            // Disparar audio nativo bloqueando si es la primera vez que pinta un ID nuevo
+            if (hasNewTicket) {
+                const bell = document.getElementById('bellSound');
+                bell.currentTime = 0;
+                bell.play().catch(e => console.log("Sonido bloqueado por política del navegador. Un toque en pantalla lo habilitará.", e));
+            }
+        }
+
+        // 4. Completar un pedido
+        function completeOrder(id) {
+            // Guardamos el ID del ticket en el basurero local del navegador para no dibujarlo nunca más
+            let completedOrders = JSON.parse(localStorage.getItem('elPatoCompleted') || '[]');
+            if (!completedOrders.includes(String(id))) {
+                completedOrders.push(String(id));
+                localStorage.setItem('elPatoCompleted', JSON.stringify(completedOrders));
+            }
+            
+            // Forzamos el redibujado instantáneo con la data que ya teníamos cacheada, ¡haciendo desaparecer el ticket mágicamente!
+            renderTickets(ordersData);
+        }
+
+        /* 
+        ========================================
+        TESTING DATA - BORRAR CUANDO SE CONECTE
+        ========================================
+        */
+        /*
+        document.getElementById('loadingMsg').style.display = 'none';
+        renderTickets([
+            { id: "MX-8901", fecha: "13:45", cliente: "Carlos Santana", pedido: "2x Huevos Rancheros\\n1x Café de Olla", notas: "Poner la salsa aparte por favor, es para un niño." },
+            { id: "MX-8902", fecha: "13:48", cliente: "Maria Gonzalez", pedido: "1x Carne Asada Plate\\n2x Jarritos" },
+            { id: "MX-8903", fecha: "13:51", cliente: "Roberto C.", pedido: "4x Tacos Dorados (3 pcs)\\n1x Agua de Horchata" }
+        ]);
+        */
+
+        // 5. Iniciar Ciclo Infinito
+        setInterval(fetchOrders, 15000); // 15,000 milisegundos = 15s
+        
+        // Ejecución inmediata al cargar la cocina
+        fetchOrders(); 
+    </script>
+</body>
+</html>
