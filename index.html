@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -635,7 +635,7 @@
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Traditional Mexican coffee with cinnamon and
                         piloncillo.</p>
-                    <div class="action-btn-container" data-name="Caf\u00e9 de Olla" data-price="3.99"></div>
+                    <div class="action-btn-container" data-name="Café de Olla" data-price="3.99"></div>
                 </div>
             </article>
 
@@ -930,7 +930,7 @@
                     <div class="space-y-4">
                         <input type="text" id="orderName" placeholder="Full Name"
                             class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
-                        <input type="tel" id="orderPhone" placeholder="Phone Number"
+                        <input type="tel" id="orderPhone" placeholder="Phone Number" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
                         <input type="text" id="orderAddress" placeholder="Delivery Address"
                             class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
@@ -950,6 +950,18 @@
                         Confirm &amp; Send Order
                     </button>
                 </div>
+            </div>
+
+            <!-- STEP 3: SUCCESS TICKET VIEW -->
+            <div id="successView" class="hidden flex-col items-center justify-center text-center py-12 px-6">
+                <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mb-6 border border-emerald-500/30 shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <h2 class="text-2xl font-bold text-zinc-100 font-fancy mb-3">Order Confirmed!</h2>
+                <p class="text-zinc-400 text-sm leading-relaxed mb-10">The kitchen has received your order.<br>Estimated time: <span class="text-amber-400 font-bold">15-20 mins</span>.</p>
+                <button onclick="closeSuccessTicket()" class="w-full py-4 bg-dark-800 text-white font-bold text-lg rounded-2xl border border-white/10 active:scale-[0.98] transition-all duration-200 hover:bg-dark-700 hover:border-white/20">
+                    Back to Menu
+                </button>
             </div>
 
         </div>
@@ -1203,6 +1215,10 @@
                 showToast('Please fill in all required fields', 'error');
                 return;
             }
+            if (phone.length < 10) {
+                showToast('Please enter a valid 10-digit phone number', 'error');
+                return;
+            }
 
             const userData = { name, phone, address };
             localStorage.setItem('elPatoUser', JSON.stringify(userData));
@@ -1243,9 +1259,11 @@
                 renderCartItems();
                 document.getElementById('orderNotes').value = '';
 
-                setTimeout(() => {
-                    closeCartModal();
-                }, 2000);
+                // Transition to Success Ticket
+                document.getElementById('checkoutView').classList.add('hidden');
+                document.getElementById('checkoutView').classList.remove('flex');
+                document.getElementById('successView').classList.remove('hidden');
+                document.getElementById('successView').classList.add('flex');
 
             } catch (error) {
                 console.error("Order error:", error);
@@ -1255,6 +1273,27 @@
                 btn.disabled = false;
                 btn.classList.remove('opacity-75', 'cursor-not-allowed');
             }
+        }
+
+        function closeSuccessTicket() {
+            if (navigator.vibrate) navigator.vibrate(40);
+            const modal = document.getElementById('cartModal');
+            const sheet = document.getElementById('cartSheet');
+            
+            sheet.classList.add('translate-y-full');
+            document.body.classList.remove('overflow-hidden'); // Unlock scroll
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                
+                // Reset views for the next order
+                document.getElementById('successView').classList.add('hidden');
+                document.getElementById('successView').classList.remove('flex');
+                document.getElementById('checkoutView').classList.add('hidden');
+                document.getElementById('checkoutView').classList.remove('flex');
+                document.getElementById('cartView').classList.remove('hidden');
+                document.getElementById('cartView').classList.add('flex');
+            }, 300);
         }
 
         // Initialize cart UI on load
