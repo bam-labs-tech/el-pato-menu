@@ -583,28 +583,84 @@
         })();
     </script>
 
+    <!-- ═══ CART MODAL (BOTTOM SHEET) ═══ -->
+    <div id="cartModal" class="fixed inset-0 z-[60] hidden">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="closeCartModal()"></div>
+        
+        <!-- Bottom Sheet -->
+        <div class="absolute bottom-0 left-0 w-full bg-dark-900 rounded-t-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col max-h-[85vh] transition-transform duration-300 translate-y-full" id="cartSheet">
+            
+            <!-- Header -->
+            <div class="flex items-center justify-between px-6 py-5 border-b border-white/5">
+                <h2 class="text-xl font-bold text-zinc-100 font-fancy">Your Order</h2>
+                <button onclick="closeCartModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
+                    <span class="text-lg font-bold leading-none">&times;</span>
+                </button>
+            </div>
+
+            <!-- Items List -->
+            <div id="cartItemsList" class="px-6 py-2 overflow-y-auto hide-scroll flex-1">
+                <!-- Injected via JS -->
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-zinc-400 font-medium">Total to pay</span>
+                    <span id="modalTotal" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</span>
+                </div>
+                <button onclick="sendOrder()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
+                    Confirm &amp; Send Order
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- ═══ CART LOGIC ═══ -->
     <script>
         let cart = JSON.parse(localStorage.getItem('elPatoCart') || '[]');
 
         function addToCart(name, price) {
-            cart.push({ name, price });
-            localStorage.setItem('elPatoCart', JSON.stringify(cart));
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.qty = (existingItem.qty || 1) + 1;
+            } else {
+                cart.push({ name, price, qty: 1 });
+            }
+            saveCart();
             updateCartUI();
+            
             // Mini feedback animation
             const bar = document.getElementById('cartBar');
             bar.classList.add('scale-[1.02]');
             setTimeout(() => bar.classList.remove('scale-[1.02]'), 150);
         }
 
+        function saveCart() {
+            localStorage.setItem('elPatoCart', JSON.stringify(cart));
+        }
+
+        function getCartTotal() {
+            return cart.reduce((sum, item) => sum + (item.price * (item.qty || 1)), 0);
+        }
+
+        function getCartItemCount() {
+            return cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+        }
+
         function updateCartUI() {
             const bar = document.getElementById('cartBar');
             const totalEl = document.getElementById('cartTotal');
             const countEl = document.getElementById('cartCount');
-            const total = cart.reduce((s, i) => s + i.price, 0);
+            
+            const total = getCartTotal();
+            const count = getCartItemCount();
+            
             totalEl.textContent = '$' + total.toFixed(2);
-            countEl.textContent = cart.length + (cart.length === 1 ? ' item' : ' items');
-            if (cart.length > 0) {
+            countEl.textContent = count + (count === 1 ? ' item' : ' items');
+            
+            if (count > 0) {
                 bar.classList.remove('translate-y-full');
             } else {
                 bar.classList.add('translate-y-full');
@@ -612,8 +668,94 @@
         }
 
         function processCheckout() {
-            console.log(cart);
-            alert('Preparing to send order to kitchen...');
+            const modal = document.getElementById('cartModal');
+            const sheet = document.getElementById('cartSheet');
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before animating transform
+            requestAnimationFrame(() => {
+                sheet.classList.remove('translate-y-full');
+            });
+            renderCartItems();
+        }
+
+        function closeCartModal() {
+            const modal = document.getElementById('cartModal');
+            const sheet = document.getElementById('cartSheet');
+            sheet.classList.add('translate-y-full');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300); // match duration-300
+        }
+
+        function renderCartItems() {
+            const list = document.getElementById('cartItemsList');
+            const modalTotal = document.getElementById('modalTotal');
+            
+            list.innerHTML = '';
+            
+            if (cart.length === 0) {
+                list.innerHTML = '<p class="text-zinc-500 text-center py-8">Your cart is empty.</p>';
+                modalTotal.textContent = '$0.00';
+                return;
+            }
+
+            cart.forEach(item => {
+                const qty = item.qty || 1;
+                const itemTotal = (item.price * qty).toFixed(2);
+                
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between py-4 border-b border-white/5 last:border-0';
+                row.innerHTML = `
+                    <div class="flex-1 min-w-0 pr-3">
+                        <h4 class="text-sm font-bold text-zinc-100 truncate">${item.name}</h4>
+                        <div class="text-amber-400 font-bold text-sm mt-0.5">$${itemTotal}</div>
+                    </div>
+                    <div class="flex items-center gap-3 bg-dark-800 rounded-full px-1 py-1 border border-white/5">
+                        <button onclick="decreaseQty('${item.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center rounded-full bg-dark-700 text-zinc-300 hover:text-white active:scale-90 transition-all">-</button>
+                        <span class="text-sm font-bold w-4 text-center text-zinc-100">${qty}</span>
+                        <button onclick="increaseQty('${item.name.replace(/'/g, "\\'")}')" class="w-7 h-7 flex items-center justify-center rounded-full bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 active:scale-90 transition-all">+</button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+            
+            modalTotal.textContent = '$' + getCartTotal().toFixed(2);
+        }
+
+        function increaseQty(name) {
+            const item = cart.find(i => i.name === name);
+            if (item) {
+                item.qty = (item.qty || 1) + 1;
+                saveCart();
+                updateCartUI();
+                renderCartItems();
+            }
+        }
+
+        function decreaseQty(name) {
+            const itemIndex = cart.findIndex(i => i.name === name);
+            if (itemIndex > -1) {
+                const item = cart[itemIndex];
+                if ((item.qty || 1) > 1) {
+                    item.qty--;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+                saveCart();
+                updateCartUI();
+                renderCartItems();
+                
+                if (cart.length === 0) {
+                    closeCartModal();
+                }
+            }
+        }
+
+        function sendOrder() {
+            if (cart.length === 0) return;
+            alert('Connecting to Kitchen server...');
+            // In a real app, send data here, then clear cart
+            // cart = []; saveCart(); updateCartUI(); closeCartModal();
         }
 
         // Initialize cart UI on load
