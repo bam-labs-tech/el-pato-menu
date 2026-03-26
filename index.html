@@ -589,42 +589,69 @@
         <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="closeCartModal()"></div>
         
         <!-- Bottom Sheet -->
-        <div class="absolute bottom-0 left-0 w-full bg-dark-900 rounded-t-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col max-h-[85vh] transition-transform duration-300 translate-y-full" id="cartSheet">
+        <div class="absolute bottom-0 left-0 w-full bg-dark-900 rounded-t-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col max-h-[85vh] transition-transform duration-300 translate-y-full overflow-hidden" id="cartSheet">
             
-            <!-- Header -->
-            <div class="flex items-center justify-between px-6 py-5 border-b border-white/5">
-                <h2 class="text-xl font-bold text-zinc-100 font-fancy">Your Order</h2>
-                <button onclick="closeCartModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
-                    <span class="text-lg font-bold leading-none">&times;</span>
-                </button>
-            </div>
+            <!-- STEP 1: CART VIEW -->
+            <div id="cartView" class="flex flex-col h-full max-h-[85vh]">
+                <!-- Header -->
+                <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 flex-none">
+                    <h2 class="text-xl font-bold text-zinc-100 font-fancy">Your Order</h2>
+                    <button onclick="closeCartModal()" class="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
+                        <span class="text-lg font-bold leading-none">&times;</span>
+                    </button>
+                </div>
 
-            <!-- Items List -->
-            <div id="cartItemsList" class="px-6 py-2 overflow-y-auto hide-scroll flex-1">
-                <!-- Injected via JS -->
-            </div>
+                <!-- Items List -->
+                <div id="cartItemsList" class="px-6 py-2 overflow-y-auto hide-scroll flex-1">
+                    <!-- Injected via JS -->
+                </div>
 
-            <!-- Delivery Details Form -->
-            <div class="px-6 py-4 border-t border-white/5 bg-dark-900 flex-none">
-                <h3 class="text-sm font-bold text-zinc-100 mb-3 uppercase tracking-wider">Delivery Details</h3>
-                <div class="space-y-3">
-                    <input type="text" id="orderName" placeholder="Full Name" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
-                    <input type="tel" id="orderPhone" placeholder="Phone Number" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
-                    <input type="text" id="orderAddress" placeholder="Delivery Address" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
-                    <input type="text" id="orderNotes" placeholder="Order Notes (Optional)" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                <!-- Footer -->
+                <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50 flex-none">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-zinc-400 font-medium">Total</span>
+                        <span id="modalTotal1" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</span>
+                    </div>
+                    <button onclick="goToCheckout()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
+                        Next: Delivery Details ➔
+                    </button>
                 </div>
             </div>
 
-            <!-- Footer -->
-            <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50">
-                <div class="flex items-center justify-between mb-4">
-                    <span class="text-zinc-400 font-medium">Total to pay</span>
-                    <span id="modalTotal" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</span>
+            <!-- STEP 2: CHECKOUT VIEW -->
+            <div id="checkoutView" class="hidden flex-col h-full max-h-[85vh]">
+                <!-- Header -->
+                <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 flex-none mb-2">
+                    <div class="flex items-center gap-3">
+                        <button onclick="goToCart()" class="w-8 h-8 flex flex-shrink-0 items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
+                            <span class="font-bold leading-none text-xl mb-1">&larr;</span>
+                        </button>
+                        <h2 class="text-xl font-bold text-zinc-100 font-fancy truncate">Delivery Details</h2>
+                    </div>
                 </div>
-                <button onclick="sendOrder()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
-                    Confirm &amp; Send Order
-                </button>
+
+                <!-- Delivery Details Form -->
+                <div class="px-6 pb-6 overflow-y-auto hide-scroll flex-1">
+                    <div class="space-y-4">
+                        <input type="text" id="orderName" placeholder="Full Name" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                        <input type="tel" id="orderPhone" placeholder="Phone Number" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                        <input type="text" id="orderAddress" placeholder="Delivery Address" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                        <textarea id="orderNotes" placeholder="Order Notes (Optional)" rows="2" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500 resize-none"></textarea>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50 flex-none">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-zinc-400 font-medium">Total to pay</span>
+                        <span id="modalTotal2" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</span>
+                    </div>
+                    <button onclick="sendOrder()" class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
+                        Confirm &amp; Send Order
+                    </button>
+                </div>
             </div>
+            
         </div>
     </div>
 
@@ -678,9 +705,27 @@
             }
         }
 
+        function goToCheckout() {
+            if (cart.length === 0) return;
+            document.getElementById('cartView').classList.add('hidden');
+            document.getElementById('cartView').classList.remove('flex');
+            document.getElementById('checkoutView').classList.remove('hidden');
+            document.getElementById('checkoutView').classList.add('flex');
+        }
+
+        function goToCart() {
+            document.getElementById('checkoutView').classList.add('hidden');
+            document.getElementById('checkoutView').classList.remove('flex');
+            document.getElementById('cartView').classList.remove('hidden');
+            document.getElementById('cartView').classList.add('flex');
+        }
+
         function processCheckout() {
             const modal = document.getElementById('cartModal');
             const sheet = document.getElementById('cartSheet');
+            
+            goToCart(); // Always start at Cart step
+
             modal.classList.remove('hidden');
             // Small delay to allow display:block to apply before animating transform
             requestAnimationFrame(() => {
@@ -715,13 +760,15 @@
 
         function renderCartItems() {
             const list = document.getElementById('cartItemsList');
-            const modalTotal = document.getElementById('modalTotal');
+            const modalTotal1 = document.getElementById('modalTotal1');
+            const modalTotal2 = document.getElementById('modalTotal2');
             
             list.innerHTML = '';
             
             if (cart.length === 0) {
                 list.innerHTML = '<p class="text-zinc-500 text-center py-8">Your cart is empty.</p>';
-                modalTotal.textContent = '$0.00';
+                modalTotal1.textContent = '$0.00';
+                modalTotal2.textContent = '$0.00';
                 return;
             }
 
@@ -745,7 +792,9 @@
                 list.appendChild(row);
             });
             
-            modalTotal.textContent = '$' + getCartTotal().toFixed(2);
+            const finalTotal = '$' + getCartTotal().toFixed(2);
+            modalTotal1.textContent = finalTotal;
+            modalTotal2.textContent = finalTotal;
         }
 
         function increaseQty(name) {
