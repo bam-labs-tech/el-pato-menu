@@ -687,9 +687,36 @@
         </div>
     </div>
 
+    <!-- ═══ TOAST CONTAINER ═══ -->
+    <div id="toastContainer" class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[70] flex flex-col gap-3 pointer-events-none items-center w-full max-w-sm px-4"></div>
+
     <!-- ═══ CART LOGIC ═══ -->
     <script>
         let cart = JSON.parse(localStorage.getItem('elPatoCart') || '[]');
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'bg-dark-950/90 text-amber-400 border border-amber-500/30 rounded-xl px-5 py-3 shadow-glow transition-all duration-300 transform translate-y-10 opacity-0 flex items-center gap-3 font-semibold text-sm backdrop-blur-md';
+            
+            const icon = type === 'success' ? '✓' : '⚠️';
+            toast.innerHTML = `<span class="text-lg leading-none">${icon}</span> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    toast.classList.remove('translate-y-10', 'opacity-0');
+                    toast.classList.add('translate-y-0', 'opacity-100');
+                });
+            });
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
 
         function renderProductButtons() {
             const containers = document.querySelectorAll('.action-btn-container');
@@ -715,6 +742,7 @@
         }
 
         function addToCart(name, price) {
+            if (navigator.vibrate) navigator.vibrate(40);
             const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
                 existingItem.qty = (existingItem.qty || 1) + 1;
@@ -778,8 +806,11 @@
         }
 
         function processCheckout() {
+            if (navigator.vibrate) navigator.vibrate(40);
             const modal = document.getElementById('cartModal');
             const sheet = document.getElementById('cartSheet');
+            
+            document.body.classList.add('overflow-hidden'); // Lock scroll
             
             goToCart(); // Always start at Cart step
 
@@ -807,9 +838,11 @@
         }
 
         function closeCartModal() {
+            if (navigator.vibrate) navigator.vibrate(40);
             const modal = document.getElementById('cartModal');
             const sheet = document.getElementById('cartSheet');
             sheet.classList.add('translate-y-full');
+            document.body.classList.remove('overflow-hidden'); // Unlock scroll
             setTimeout(() => {
                 modal.classList.add('hidden');
             }, 300); // match duration-300
@@ -855,6 +888,7 @@
         }
 
         function increaseQty(name) {
+            if (navigator.vibrate) navigator.vibrate(40);
             const item = cart.find(i => i.name === name);
             if (item) {
                 item.qty = (item.qty || 1) + 1;
@@ -865,6 +899,7 @@
         }
 
         function decreaseQty(name) {
+            if (navigator.vibrate) navigator.vibrate(40);
             const itemIndex = cart.findIndex(i => i.name === name);
             if (itemIndex > -1) {
                 const item = cart[itemIndex];
@@ -884,6 +919,7 @@
         }
 
         function sendOrder() {
+            if (navigator.vibrate) navigator.vibrate(40);
             if (cart.length === 0) return;
             
             const name = document.getElementById('orderName').value.trim();
@@ -892,16 +928,32 @@
             const notes = document.getElementById('orderNotes').value.trim();
             
             if (!name || !phone || !address) {
-                alert('Please fill in your Full Name, Phone Number, and Delivery Address.');
+                showToast('Please fill in your Full Name, Phone Number, and Delivery Address.', 'error');
                 return;
             }
             
             const userData = { name, phone, address };
             localStorage.setItem('elPatoUser', JSON.stringify(userData));
             
-            alert('Order ready for ' + name + '! Connecting to kitchen...');
-            // In a real app, send data here, then clear cart
-            // cart = []; saveCart(); updateCartUI(); closeCartModal();
+            const btn = document.querySelector('button[onclick="sendOrder()"]');
+            const originalText = btn.innerHTML;
+            
+            btn.innerHTML = `<svg class="animate-spin h-6 w-6 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            
+            setTimeout(() => {
+                showToast(`Order sent for ${name}! Connecting to kitchen...`);
+                cart = [];
+                saveCart();
+                updateCartUI();
+                renderCartItems();
+                closeCartModal();
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                document.getElementById('orderNotes').value = '';
+            }, 2000);
         }
 
         // Initialize cart UI on load
