@@ -604,6 +604,17 @@
                 <!-- Injected via JS -->
             </div>
 
+            <!-- Delivery Details Form -->
+            <div class="px-6 py-4 border-t border-white/5 bg-dark-900 flex-none">
+                <h3 class="text-sm font-bold text-zinc-100 mb-3 uppercase tracking-wider">Delivery Details</h3>
+                <div class="space-y-3">
+                    <input type="text" id="orderName" placeholder="Full Name" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                    <input type="tel" id="orderPhone" placeholder="Phone Number" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                    <input type="text" id="orderAddress" placeholder="Delivery Address" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                    <input type="text" id="orderNotes" placeholder="Order Notes (Optional)" class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-2.5 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                </div>
+            </div>
+
             <!-- Footer -->
             <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50">
                 <div class="flex items-center justify-between mb-4">
@@ -676,6 +687,21 @@
                 sheet.classList.remove('translate-y-full');
             });
             renderCartItems();
+            loadUserData();
+        }
+
+        function loadUserData() {
+            const userDataStr = localStorage.getItem('elPatoUser');
+            if (userDataStr) {
+                try {
+                    const userData = JSON.parse(userDataStr);
+                    if (userData.name) document.getElementById('orderName').value = userData.name;
+                    if (userData.phone) document.getElementById('orderPhone').value = userData.phone;
+                    if (userData.address) document.getElementById('orderAddress').value = userData.address;
+                } catch (e) {
+                    console.error("Error parsing user data");
+                }
+            }
         }
 
         function closeCartModal() {
@@ -753,7 +779,21 @@
 
         function sendOrder() {
             if (cart.length === 0) return;
-            alert('Connecting to Kitchen server...');
+            
+            const name = document.getElementById('orderName').value.trim();
+            const phone = document.getElementById('orderPhone').value.trim();
+            const address = document.getElementById('orderAddress').value.trim();
+            const notes = document.getElementById('orderNotes').value.trim();
+            
+            if (!name || !phone || !address) {
+                alert('Please fill in your Full Name, Phone Number, and Delivery Address.');
+                return;
+            }
+            
+            const userData = { name, phone, address };
+            localStorage.setItem('elPatoUser', JSON.stringify(userData));
+            
+            alert('Order ready for ' + name + '! Connecting to kitchen...');
             // In a real app, send data here, then clear cart
             // cart = []; saveCart(); updateCartUI(); closeCartModal();
         }
