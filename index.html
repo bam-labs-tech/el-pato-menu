@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -1337,6 +1337,22 @@
             }, 300);
         }
 
+        function reorderPastOrder(index) {
+            if (navigator.vibrate) navigator.vibrate(40);
+            let history = JSON.parse(localStorage.getItem('elPatoOrderHistory') || '[]');
+            if(history[index]) {
+                // Copia profunda de los items para no alterar el historial
+                cart = JSON.parse(JSON.stringify(history[index].items)); 
+                saveCart();
+                updateCartUI();
+                closeHistory();
+                showToast('🛒 Cart updated with past order!', 'success');
+                setTimeout(() => {
+                    processCheckout(); // Abre la pantalla de confirmación
+                }, 400);
+            }
+        }
+
         function openHistory() {
             if (navigator.vibrate) navigator.vibrate(40);
             const modal = document.getElementById('historyModal');
@@ -1357,7 +1373,9 @@
             if (history.length === 0) {
                 list.innerHTML = `<p class="text-center text-zinc-500 mt-10">You haven't placed any orders yet.</p>`;
             } else {
-                [...history].reverse().forEach(order => {
+                // Usamos slice() para no mutar el array original y calculamos el índice real
+                history.slice().reverse().forEach((order, reversedIndex) => {
+                    const originalIndex = history.length - 1 - reversedIndex;
                     const itemsHtml = order.items.map(i => `<span class="text-white">${i.qty || 1}x</span> ${i.name}`).join('<br>');
 
                     const card = document.createElement('div');
@@ -1367,9 +1385,12 @@
                             <span class="text-xs font-bold text-zinc-500">${order.date}</span>
                             <span class="text-sm font-extrabold text-amber-400">${order.total}</span>
                         </div>
-                        <div class="text-sm text-zinc-400 leading-relaxed font-medium">
+                        <div class="text-sm text-zinc-400 leading-relaxed font-medium mb-4">
                             ${itemsHtml}
                         </div>
+                        <button onclick="reorderPastOrder(${originalIndex})" class="w-full py-2.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 font-bold rounded-xl active:scale-95 transition-all text-sm border border-amber-500/20">
+                            🔄 Reorder this
+                        </button>
                     `;
                     list.appendChild(card);
                 });
