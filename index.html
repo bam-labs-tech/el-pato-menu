@@ -186,7 +186,12 @@
             <!-- History Button -->
             <button onclick="openHistory()"
                 class="bg-dark-800/80 backdrop-blur-sm border border-white/10 p-3 rounded-full text-amber-400 shadow-float active:scale-95 transition-all outline-none focus:ring-2 focus:ring-amber-500/50">
-                <span class="text-xl leading-none block">🧾</span>
+                <span class="text-xl leading-none block"><svg class="w-6 h-6" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4">
+                        </path>
+                    </svg></span>
             </button>
         </div>
     </header>
@@ -196,19 +201,68 @@
         <ul class="hide-scroll flex gap-2.5 px-4 py-3 overflow-x-auto" role="tablist">
             <li><button
                     class="nav-pill active text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
-                    data-cat="breakfast"><span class="mr-1.5">🍳</span>Breakfast</button></li>
+                    data-cat="breakfast">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.4" d="M10 7c-4 0-6 2-6 6s3 6 7 6 5-2 5-5-1-2-1-4-1-3-5-3z" />
+                        <circle cx="10" cy="13" r="2.5" />
+                        <path
+                            d="M17.5 4c-.5.5-1.5 1-2.5 1s-2-.5-2.5-1l-3 14c.5.5 1.5 1 2.5 1s2-.5 2.5-1l3-14zM21 5c-.5.5-1.5 1-2.5 1s-2-.5-2.5-1l-3 14c.5.5 1.5 1 2.5 1s2-.5 2.5-1l3-14z" />
+                    </svg>
+                    Breakfast
+                </button></li>
             <li><button
                     class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
-                    data-cat="tortas"><span class="mr-1.5">🥖</span>Tortas</button></li>
+                    data-cat="tortas">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 10c0-2 2-5 7-5s7 3 7 5H5z" />
+                        <path opacity="0.4" fill-rule="evenodd" d="M4 11h16a1 1 0 0 1 1 1v1H3v-1a1 1 0 0 1 1-1z"
+                            clip-rule="evenodd" />
+                        <path d="M4 14h16v2H4z" />
+                        <path d="M5 17h14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" />
+                    </svg>
+                    Tortas
+                </button></li>
             <li><button
                     class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
-                    data-cat="tacos-mains"><span class="mr-1.5">🌮</span>Tacos &amp; Mains</button></li>
+                    data-cat="tacos-mains">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#f59e0b">
+                        <path opacity="0.4"
+                            d="M56.901,30.661c-0.568-4.216-3.767-7.61-7.932-8.457C48.562,17.061,44.246,13,39,13c-1.126,0-2.248,0.194-3.311,0.568 C33.866,11.921,31.5,11,29,11s-4.866,0.921-6.689,2.568C21.249,13.194,20.126,13,19,13c-5.243,0-9.556,4.056-9.968,9.194 C4.457,23.111,1,27.159,1,32c0,3.172,1.506,6.129,4.004,8.003C4.355,42.225,4,44.571,4,47v3c0,2.206,1.794,4,4,4h51 c2.206,0,4-1.794,4-4v-3C63,40.98,60.829,35.202,56.901,30.661z M5,32c0-3.309,2.691-6,6.07-6c0.572,0,1.116-0.245,1.496-0.672 c0.379-0.428,0.558-0.998,0.49-1.565C13.025,23.51,13,23.259,13,23c0-3.309,2.691-6,6-6c1,0,1.955,0.242,2.84,0.72 c0.847,0.457,1.896,0.248,2.503-0.499C25.489,15.81,27.186,15,29,15s3.511,0.81,4.657,2.221c0.605,0.747,1.657,0.957,2.503,0.499 C37.045,17.242,38.001,17,39,17c3.309,0,6,2.691,6,6c0,0.258-0.025,0.508-0.056,0.759c-0.069,0.568,0.144,1.139,0.523,1.567 C45.848,25.755,46.428,26,47,26c3.309,0,6,2.691,6,6c0,1.509-0.574,2.924-1.552,4.009C47.373,27.72,38.843,22,29,22 c-9.843,0-18.372,5.72-22.448,14.008C5.575,34.922,5,33.505,5,32z M8,47c0-11.58,9.42-21,21-21c11.579,0,21,9.42,21,21v3H8V47z M59,50h-5v-3c0-2.43-0.355-4.778-1.005-7.002c1.319-0.989,2.35-2.282,3.039-3.747C57.96,39.479,59,43.182,59,47V50z">
+                        </path>
+                        <path
+                            d="M14.02 43h-.01c-1.104 0-1.995.896-1.995 2s.9 2 2.005 2 2-.896 2-2S15.125 43 14.02 43zM20.02 43h-.01c-1.104 0-1.995.896-1.995 2s.9 2 2.005 2 2-.896 2-2S21.125 43 20.02 43zM19.02 39c0-1.104-.896-2-2-2h-.01c-1.104 0-1.995.896-1.995 2s.9 2 2.005 2S19.02 40.104 19.02 39z">
+                        </path>
+                    </svg>
+                    Tacos &amp; Mains
+                </button></li>
             <li><button
                     class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
-                    data-cat="soups"><span class="mr-1.5">🍲</span>Soups</button></li>
+                    data-cat="soups">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 11a9 8 0 0 0 18 0H3z" />
+                        <path opacity="0.4" d="M12 9c-5 0-9 1-9 2s4 2 9 2 9-1 9-2-4-2-9-2z" />
+                        <path
+                            d="M8 8c0-1.5.5-2 1.5-2s1.5-.5 1.5-2h-1.5C8.5 4 8 4.5 8 6S6.5 6.5 6.5 8h1.5zm5 0c0-1.5.5-2 1.5-2s1.5-.5 1.5-2h-1.5c-1 0-1.5.5-1.5 2s-1.5 1.5-1.5 3h1.5zm5 0c0-1.5.5-2 1.5-2s1.5-.5 1.5-2h-1.5c-1 0-1.5.5-1.5 2s-1.5 1.5-1.5 3H18z" />
+                    </svg>
+                    Soups
+                </button></li>
             <li><button
                     class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
-                    data-cat="drinks"><span class="mr-1.5">🥤</span>Drinks</button></li>
+                    data-cat="drinks">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd" d="M12 15l8-10H4l8 10z" />
+                        <path d="M11 14v6H8v2h8v-2h-3v-6h-2z" />
+                        <path d="M12 13l5.6-7H6.4L12 13z" />
+                        <path d="M18 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4.5A1.5 1.5 0 1 1 18 5.5a1.5 1.5 0 0 1 0 3z" />
+                        <path d="M9 3H7l2 6h2L9 3z" />
+                    </svg>
+                    Drinks
+                </button></li>
         </ul>
     </nav>
 
@@ -228,7 +282,15 @@
         <!-- ═══ BREAKFAST ═══ -->
         <section class="section mb-12" id="breakfast">
             <div class="flex items-center gap-3 mb-5 px-1">
-                <span class="text-2xl">🍳</span>
+                <span class="text-2xl">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.4" d="M10 7c-4 0-6 2-6 6s3 6 7 6 5-2 5-5-1-2-1-4-1-3-5-3z" />
+                        <circle cx="10" cy="13" r="2.5" />
+                        <path
+                            d="M17.5 4c-.5.5-1.5 1-2.5 1s-2-.5-2.5-1l-3 14c.5.5 1.5 1 2.5 1s2-.5 2.5-1l3-14zM21 5c-.5.5-1.5 1-2.5 1s-2-.5-2.5-1l-3 14c.5.5 1.5 1 2.5 1s2-.5 2.5-1l3-14z" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Breakfast</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">2
                     items</span>
@@ -268,7 +330,13 @@
                         cheese, and eggs.</p>
                     <div class="flex gap-2 mt-3">
                         <span
-                            class="badge-float text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">🌱
+                            class="badge-float text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Vegetarian</span>
                     </div>
                     <div class="action-btn-container" data-name="Chilaquiles Verdes" data-price="20.72"></div>
@@ -279,7 +347,16 @@
         <!-- ═══ TORTAS ═══ -->
         <section class="section mb-12" id="tortas">
             <div class="flex items-center gap-3 mb-5 px-1">
-                <span class="text-2xl">🥖</span>
+                <span class="text-2xl">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M5 10c0-2 2-5 7-5s7 3 7 5H5z" />
+                        <path opacity="0.4" fill-rule="evenodd" d="M4 11h16a1 1 0 0 1 1 1v1H3v-1a1 1 0 0 1 1-1z"
+                            clip-rule="evenodd" />
+                        <path d="M4 14h16v2H4z" />
+                        <path d="M5 17h14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2z" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Tortas</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">2
                     items</span>
@@ -296,7 +373,13 @@
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Cubana Torta
                             <span
-                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle">👑
+                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle"><svg
+                                    class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
                                 Bestseller</span>
                         </h3>
                         <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$21.10</span>
@@ -305,10 +388,22 @@
                         telera roll.</p>
                     <div class="flex flex-wrap gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">🥑
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Avocado</span>
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">🥩
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Milanesa</span>
                     </div>
                     <div class="action-btn-container" data-name="Cubana Torta" data-price="21.10"></div>
@@ -331,10 +426,22 @@
                         chipotle.</p>
                     <div class="flex flex-wrap gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20">🍍
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Pineapple</span>
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">🌶️
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Chipotle</span>
                     </div>
                     <div class="action-btn-container" data-name="Hawaiian Torta" data-price="21.10"></div>
@@ -345,7 +452,17 @@
         <!-- ═══ TACOS & MAINS ═══ -->
         <section class="section mb-12" id="tacos-mains">
             <div class="flex items-center gap-3 mb-5 px-1">
-                <span class="text-2xl">🌮</span>
+                <span class="text-2xl">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#f59e0b">
+                        <path opacity="0.4"
+                            d="M56.901,30.661c-0.568-4.216-3.767-7.61-7.932-8.457C48.562,17.061,44.246,13,39,13c-1.126,0-2.248,0.194-3.311,0.568 C33.866,11.921,31.5,11,29,11s-4.866,0.921-6.689,2.568C21.249,13.194,20.126,13,19,13c-5.243,0-9.556,4.056-9.968,9.194 C4.457,23.111,1,27.159,1,32c0,3.172,1.506,6.129,4.004,8.003C4.355,42.225,4,44.571,4,47v3c0,2.206,1.794,4,4,4h51 c2.206,0,4-1.794,4-4v-3C63,40.98,60.829,35.202,56.901,30.661z M5,32c0-3.309,2.691-6,6.07-6c0.572,0,1.116-0.245,1.496-0.672 c0.379-0.428,0.558-0.998,0.49-1.565C13.025,23.51,13,23.259,13,23c0-3.309,2.691-6,6-6c1,0,1.955,0.242,2.84,0.72 c0.847,0.457,1.896,0.248,2.503-0.499C25.489,15.81,27.186,15,29,15s3.511,0.81,4.657,2.221c0.605,0.747,1.657,0.957,2.503,0.499 C37.045,17.242,38.001,17,39,17c3.309,0,6,2.691,6,6c0,0.258-0.025,0.508-0.056,0.759c-0.069,0.568,0.144,1.139,0.523,1.567 C45.848,25.755,46.428,26,47,26c3.309,0,6,2.691,6,6c0,1.509-0.574,2.924-1.552,4.009C47.373,27.72,38.843,22,29,22 c-9.843,0-18.372,5.72-22.448,14.008C5.575,34.922,5,33.505,5,32z M8,47c0-11.58,9.42-21,21-21c11.579,0,21,9.42,21,21v3H8V47z M59,50h-5v-3c0-2.43-0.355-4.778-1.005-7.002c1.319-0.989,2.35-2.282,3.039-3.747C57.96,39.479,59,43.182,59,47V50z">
+                        </path>
+                        <path
+                            d="M14.02 43h-.01c-1.104 0-1.995.896-1.995 2s.9 2 2.005 2 2-.896 2-2S15.125 43 14.02 43zM20.02 43h-.01c-1.104 0-1.995.896-1.995 2s.9 2 2.005 2 2-.896 2-2S21.125 43 20.02 43zM19.02 39c0-1.104-.896-2-2-2h-.01c-1.104 0-1.995.896-1.995 2s.9 2 2.005 2S19.02 40.104 19.02 39z">
+                        </path>
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Tacos &amp; Mains</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">4
                     items</span>
@@ -385,7 +502,13 @@
                         slaw.</p>
                     <div class="flex gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/20">🦐
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-red-500/15 text-red-400 border border-red-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Shrimp</span>
                     </div>
                     <div class="action-btn-container" data-name="Shrimp Tacos (2 pcs)" data-price="19.50"></div>
@@ -403,7 +526,13 @@
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Carne Asada Plate
                             <span
-                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 ml-1.5 align-middle">👨‍🍳
+                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 ml-1.5 align-middle"><svg
+                                    class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M7.493 18.75c-.425 0-.82-.236-1.042-.647.78-4.43-1.66-9.155-2.03-9.84a1.5 1.5 0 011.31-2.215h1.234a1.5 1.5 0 011.458 1.144L9.043 9.49a1.5 1.5 0 001.458 1.144h5.617a1.5 1.5 0 001.385-2.073c-.365-.92-.093-2.01.696-2.585.399-.292.834-.45 1.282-.47l.456-.02a2.25 2.25 0 012.308 2.392l-1.002 12.02A2.25 2.25 0 0119.006 21H8.97a3.75 3.75 0 01-3.75-3.75v-.898a1.5 1.5 0 011.5-1.5h.773z">
+                                    </path>
+                                </svg>
                                 Chef's Pick</span>
                         </h3>
                         <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$24.50</span>
@@ -412,7 +541,13 @@
                         guacamole.</p>
                     <div class="flex gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20">🥑
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M9 4.5a.75.75 0 01.721.544l.813 2.846a3.75 3.75 0 002.576 2.576l2.846.813a.75.75 0 010 1.442l-2.846.813a3.75 3.75 0 00-2.576 2.576l-.813 2.846a.75.75 0 01-1.442 0l-.813-2.846a3.75 3.75 0 00-2.576-2.576l-2.846-.813a.75.75 0 010-1.442l2.846-.813A3.75 3.75 0 007.466 7.89l.813-2.846A.75.75 0 019 4.5zM18 1.5a.75.75 0 01.728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 010 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 01-1.456 0l-.258-1.036a2.625 2.625 0 00-1.91-1.91l-1.036-.258a.75.75 0 010-1.456l1.036-.258a2.625 2.625 0 001.91-1.91l.258-1.036A.75.75 0 0118 1.5zM16.5 15a.75.75 0 01.712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 010 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 01-1.422 0l-.395-1.183a1.5 1.5 0 00-.948-.948l-1.183-.395a.75.75 0 010-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0116.5 15z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Guacamole</span>
                     </div>
                     <div class="action-btn-container" data-name="Carne Asada Plate" data-price="24.50"></div>
@@ -435,7 +570,13 @@
                         melted Swiss cheese.</p>
                     <div class="flex gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 border border-orange-500/20">🌶️
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 border border-orange-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Spicy</span>
                     </div>
                     <div class="action-btn-container" data-name="Enchiladas Suizas" data-price="19.95"></div>
@@ -446,7 +587,15 @@
         <!-- ═══ SOUPS ═══ -->
         <section class="section mb-12" id="soups">
             <div class="flex items-center gap-3 mb-5 px-1">
-                <span class="text-2xl">🍲</span>
+                <span class="text-2xl">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 11a9 8 0 0 0 18 0H3z" />
+                        <path opacity="0.4" d="M12 9c-5 0-9 1-9 2s4 2 9 2 9-1 9-2-4-2-9-2z" />
+                        <path
+                            d="M8 8c0-1.5.5-2 1.5-2s1.5-.5 1.5-2h-1.5C8.5 4 8 4.5 8 6S6.5 6.5 6.5 8h1.5zm5 0c0-1.5.5-2 1.5-2s1.5-.5 1.5-2h-1.5c-1 0-1.5.5-1.5 2s-1.5 1.5-1.5 3h1.5zm5 0c0-1.5.5-2 1.5-2s1.5-.5 1.5-2h-1.5c-1 0-1.5.5-1.5 2s-1.5 1.5-1.5 3H18z" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Soups</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">2
                     items</span>
@@ -486,7 +635,13 @@
                         lime.</p>
                     <div class="flex gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20">📅
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M6.75 2.25A.75.75 0 017.5 3v1.5h9V3A.75.75 0 0118 3v1.5h.75a3 3 0 013 3v11.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V7.5a3 3 0 013-3H6V3a.75.75 0 01.75-.75zm13.5 9a1.5 1.5 0 00-1.5-1.5H5.25a1.5 1.5 0 00-1.5 1.5v7.5a1.5 1.5 0 001.5 1.5h13.5a1.5 1.5 0 001.5-1.5v-7.5z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Weekends Only</span>
                     </div>
                     <div class="action-btn-container" data-name="Menudo" data-price="18.99"></div>
@@ -505,7 +660,12 @@
                     <p class="text-2xl font-extrabold text-amber-400 font-fancy tracking-wide">Drinks &amp; Bar</p>
                     <p class="text-xs text-zinc-600 mt-1 tracking-widest uppercase">Curated Beverages</p>
                 </div>
-                <span class="text-3xl">🥂</span>
+                <span class="text-3xl"><svg class="w-7 h-7 text-amber-500" fill="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                            clip-rule="evenodd"></path>
+                    </svg></span>
                 <div class="w-16 h-px bg-gradient-to-l from-transparent to-amber-500/50"></div>
             </div>
             <div
@@ -518,7 +678,16 @@
 
             <!-- Aguas Frescas & Sodas -->
             <div class="flex items-center gap-3 mb-5 px-1">
-                <span class="text-2xl">🥤</span>
+                <span class="text-2xl">
+                    <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
+                        viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
+                        <path opacity="0.4" fill-rule="evenodd" clip-rule="evenodd" d="M12 15l8-10H4l8 10z" />
+                        <path d="M11 14v6H8v2h8v-2h-3v-6h-2z" />
+                        <path d="M12 13l5.6-7H6.4L12 13z" />
+                        <path d="M18 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm0 4.5A1.5 1.5 0 1 1 18 5.5a1.5 1.5 0 0 1 0 3z" />
+                        <path d="M9 3H7l2 6h2L9 3z" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Aguas Frescas &amp; Sodas</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">5
                     items</span>
@@ -535,7 +704,13 @@
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Agua de Horchata
                             <span
-                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle">👑
+                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle"><svg
+                                    class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
                                 Bestseller</span>
                         </h3>
                         <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$4.50</span>
@@ -573,7 +748,13 @@
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Mexican Coke
                             <span
-                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 ml-1.5 align-middle">⭐
+                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 border border-emerald-500/20 ml-1.5 align-middle"><svg
+                                    class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.006z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
                                 Classic</span>
                         </h3>
                         <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$3.99</span>
@@ -620,7 +801,15 @@
 
             <!-- Hot Drinks -->
             <div class="flex items-center gap-3 mb-5 mt-10 px-1">
-                <span class="text-2xl">☕</span>
+                <span class="text-2xl">
+                    <svg class="w-6 h-6 inline-block -mt-1 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8h1a4 4 0 1 1 0 8h-1" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 2v2M10 2v2M14 2v2" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Hot Drinks</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">2
                     items</span>
@@ -637,7 +826,13 @@
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Café de Olla
                             <span
-                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle">☕
+                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle"><svg
+                                    class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-3.837-2.731C5.27 15.65 2.38 12.22 2.38 8.5 2.38 5.48 4.75 3.09 7.78 3.09c1.64 0 3.24.73 4.22 2.05 1-.94 2.45-1.92 4.14-1.92 3.03 0 5.42 2.39 5.42 5.41 0 3.72-2.89 7.15-5.39 9.66a15.25 15.25 0 01-3.837 2.731l-.022.012-.007.003h-.001a.75.75 0 01-.652 0z">
+                                    </path>
+                                </svg>
                                 Morning Favorite</span>
                         </h3>
                         <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$3.99</span>
@@ -667,7 +862,17 @@
 
             <!-- Cervezas Frias -->
             <div class="flex items-center gap-3 mb-5 mt-10 px-1">
-                <span class="text-2xl">🍺</span>
+                <span class="text-2xl">
+                    <svg class="w-6 h-6 inline-block -mt-1 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M16 9h2a3 3 0 0 1 3 3v2a3 3 0 0 1-3 3h-2" />
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6 9h10v10a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 9c0-1.5 2-3 5-3s5 1.5 5 3" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9M14 9v9" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Cervezas Frias</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">4
                     items</span>
@@ -739,7 +944,14 @@
 
             <!-- Cocktails & Specialties -->
             <div class="flex items-center gap-3 mb-5 mt-10 px-1">
-                <span class="text-2xl">🍹</span>
+                <span class="text-2xl">
+                    <svg class="w-6 h-6 inline-block -mt-1 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        stroke-width="2" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M6 4h12l-2 15a2 2 0 0 1-2 2H10a2 2 0 0 1-2-2L6 4Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 2l-1 2M7 9h10" />
+                    </svg>
+                </span>
                 <h2 class="text-lg font-bold text-zinc-100 font-fancy">Cocktails &amp; Specialties</h2>
                 <span class="ml-auto text-xs font-semibold text-zinc-600 bg-zinc-800/60 px-3 py-1 rounded-full">3
                     items</span>
@@ -756,7 +968,13 @@
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Classic Margarita
                             <span
-                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle">🍋
+                                class="badge-float inline-flex text-[10px] font-bold px-3 py-0.5 rounded-full bg-amber-500/15 text-amber-400 border border-amber-500/20 ml-1.5 align-middle"><svg
+                                    class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
                                 House Special</span>
                         </h3>
                         <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$10.50</span>
@@ -783,7 +1001,13 @@
                         our special spicy rim.</p>
                     <div class="flex gap-2 mt-3">
                         <span
-                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 border border-orange-500/20">🌶️
+                            class="text-[10px] font-bold px-3 py-1 rounded-full bg-orange-500/15 text-orange-400 border border-orange-500/20"><svg
+                                class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd"
+                                    d="M12.963 2.286a.75.75 0 00-1.071-.136 9.742 9.742 0 00-3.539 6.177A7.547 7.547 0 016.648 6.61a.75.75 0 00-1.152-.082A9 9 0 1015.68 4.534a7.46 7.46 0 01-2.717-2.248zM15.75 14.25a3.75 3.75 0 11-7.313-1.172c.628.465 1.35.81 2.133 1a5.99 5.99 0 011.925-3.545 3.75 3.75 0 013.255 3.717z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
                             Spicy</span>
                     </div>
                     <div class="action-btn-container" data-name="Michelada" data-price="9.50"></div>
@@ -813,10 +1037,17 @@
         <div class="text-center py-12 border-t border-white/5">
             <p class="text-sm text-zinc-500"><strong class="text-zinc-400">Mon – Sun</strong> &nbsp; 7:00 AM – 10:00 PM
             </p>
-            <p class="text-xs text-zinc-600 mt-1.5">📍 California · Dine-in · Pickup · Delivery</p>
+            <p class="text-xs text-zinc-600 mt-1.5">📍 California · Exclusivo para consumo en el local</p>
             <p class="text-[11px] text-zinc-700 mt-5">© 2026 Restaurante El Pato. All rights reserved.</p>
         </div>
     </main>
+
+    <!-- ═══ CALL WAITER BUTTON ═══ -->
+    <button onclick="callWaiter()" id="waiterBtn"
+        class="fixed bottom-6 left-6 z-40 bg-zinc-800 text-zinc-300 border border-white/10 rounded-full px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.5)] flex items-center gap-2 font-bold text-sm transition-all duration-300 active:scale-95 hover:bg-zinc-700 hover:text-white group truncate max-w-[calc(100vw-3rem)]">
+        <span class="text-lg group-hover:animate-bounce">🔔</span>
+        <span class="hidden sm:inline-block">Llamar Mesero</span>
+    </button>
 
     <!-- ═══ FLOATING CART BAR ═══ -->
     <div id="cartBar"
@@ -829,7 +1060,12 @@
             <span id="cartCount" class="text-sm text-zinc-400 font-medium">0 items</span>
             <button onclick="processCheckout()"
                 class="px-7 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full shadow-fab active:scale-95 transition-all duration-200 hover:shadow-[0_8px_36px_rgba(245,158,11,0.5)]">Checkout
-                🚀</button>
+                <svg class="w-5 h-5 inline-block ml-1" fill="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M12.97 3.97a.75.75 0 011.06 0l7.5 7.5a.75.75 0 010 1.06l-7.5 7.5a.75.75 0 11-1.06-1.06l6.22-6.22H3a.75.75 0 010-1.5h16.19l-6.22-6.22a.75.75 0 010-1.06z"
+                        clip-rule="evenodd"></path>
+                </svg></button>
         </div>
     </div>
 
@@ -877,9 +1113,9 @@
             const h = new Date().getHours();
             const icon = document.getElementById('greetIcon');
             const title = document.getElementById('greetTitle');
-            if (h < 12) { icon.textContent = '☕'; title.textContent = 'Good morning! Welcome to El Pato'; }
-            else if (h < 18) { icon.textContent = '☀️'; title.textContent = 'Good afternoon! Welcome to El Pato'; }
-            else { icon.textContent = '🌙'; title.textContent = 'Good evening! Welcome to El Pato'; }
+            if (h < 12) { icon.innerHTML = '<svg class="w-3 h-3 inline-block -mt-0.5 mr-1" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-3.837-2.731C5.27 15.65 2.38 12.22 2.38 8.5 2.38 5.48 4.75 3.09 7.78 3.09c1.64 0 3.24.73 4.22 2.05 1-.94 2.45-1.92 4.14-1.92 3.03 0 5.42 2.39 5.42 5.41 0 3.72-2.89 7.15-5.39 9.66a15.25 15.25 0 01-3.837 2.731l-.022.012-.007.003h-.001a.75.75 0 01-.652 0z"></path></svg>'; title.textContent = 'Good morning! Welcome to El Pato'; }
+            else if (h < 18) { icon.innerHTML = '☀️'; title.textContent = 'Good afternoon! Welcome to El Pato'; }
+            else { icon.innerHTML = '🌙'; title.textContent = 'Good evening! Welcome to El Pato'; }
         })();
     </script>
 
@@ -916,7 +1152,7 @@
                     </div>
                     <button onclick="goToCheckout()"
                         class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
-                        Next: Delivery Details ➔
+                        Siguiente: Confirmar Mesa ➔
                     </button>
                 </div>
             </div>
@@ -930,19 +1166,19 @@
                             class="w-8 h-8 flex flex-shrink-0 items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
                             <span class="font-bold leading-none text-xl mb-1">&larr;</span>
                         </button>
-                        <h2 class="text-xl font-bold text-zinc-100 font-fancy truncate">Delivery Details</h2>
+                        <h2 class="text-xl font-bold text-zinc-100 font-fancy truncate">Detalles de tu Mesa</h2>
                     </div>
                 </div>
 
                 <!-- Delivery Details Form -->
                 <div class="px-6 pb-6 overflow-y-auto hide-scroll flex-1">
                     <div class="space-y-4">
+                        <input type="hidden" id="orderMesa" value="">
+                        <div id="displayMesa"
+                            class="w-full bg-dark-900 border border-amber-500/40 text-amber-500 rounded-xl px-4 py-3 text-sm font-bold flex items-center shadow-glow mb-2">
+                            📍 Detectando mesa...
+                        </div>
                         <input type="text" id="orderName" placeholder="Full Name"
-                            class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
-                        <input type="tel" id="orderPhone" placeholder="Phone Number" maxlength="10"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
-                            class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
-                        <input type="text" id="orderAddress" placeholder="Delivery Address"
                             class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
                         <textarea id="orderNotes" placeholder="Order Notes (Optional)" rows="2"
                             class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500 resize-none"></textarea>
@@ -1095,10 +1331,14 @@
             totalEl.textContent = '$' + total.toFixed(2);
             countEl.textContent = count + (count === 1 ? ' item' : ' items');
 
+            const waiterBtn = document.getElementById('waiterBtn');
+
             if (count > 0) {
                 bar.classList.remove('translate-y-full');
+                if (waiterBtn) waiterBtn.classList.add('-translate-y-24');
             } else {
                 bar.classList.add('translate-y-full');
+                if (waiterBtn) waiterBtn.classList.remove('-translate-y-24');
             }
 
             renderProductButtons();
@@ -1117,6 +1357,48 @@
             document.getElementById('checkoutView').classList.remove('flex');
             document.getElementById('cartView').classList.remove('hidden');
             document.getElementById('cartView').classList.add('flex');
+        }
+
+        async function callWaiter() {
+            if (navigator.vibrate) navigator.vibrate(40);
+            const mesaValue = document.getElementById('orderMesa').value.trim();
+            const btn = document.getElementById('waiterBtn');
+            const originalHTML = btn.innerHTML;
+
+            if (!mesaValue) {
+                showToast('⚠️ Escanea el QR de tu mesa para llamar al mesero.', 'error');
+                return;
+            }
+
+            btn.innerHTML = `<span class="animate-spin text-lg">⏳</span> <span class="hidden sm:inline-block">Llamando...</span>`;
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+
+            try {
+                const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLyallT2NNIfT6inzajJrouL510bjR27dLxIpwGo5_yFWXHv0cCJ9kDeSj4ZFL6LOe/exec';
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        nombre: 'Mesa ' + mesaValue,
+                        mesa: mesaValue,
+                        notas: 'Llamada de asistencia',
+                        pedido: '🔔 ASISTENCIA REQUERIDA',
+                        total: 0
+                    })
+                });
+
+                showToast('✅ El mesero va en camino a tu mesa.', 'success');
+            } catch (error) {
+                showToast('❌ Error al contactar, intenta de nuevo.', 'error');
+            } finally {
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.disabled = false;
+                    btn.classList.remove('opacity-75', 'cursor-not-allowed', 'pointer-events-none');
+                }, 3000);
+            }
         }
 
         function processCheckout() {
@@ -1143,13 +1425,41 @@
                 try {
                     const userData = JSON.parse(userDataStr);
                     if (userData.name) document.getElementById('orderName').value = userData.name;
-                    if (userData.phone) document.getElementById('orderPhone').value = userData.phone;
-                    if (userData.address) document.getElementById('orderAddress').value = userData.address;
                 } catch (e) {
                     console.error("Error parsing user data");
                 }
             }
+            checkUrlMesa();
         }
+
+        function checkUrlMesa() {
+            const params = new URLSearchParams(window.location.search);
+            const m = params.get('mesa');
+            const display = document.getElementById('displayMesa');
+
+            if (m) {
+                document.getElementById('orderMesa').value = m;
+                if (display) display.innerHTML = `📍 Mesa <span class="text-zinc-100 font-extrabold mx-1">${m}</span> Confirmada`;
+            } else {
+                // Si entraron al link directo sin escanear el QR
+                setTimeout(() => showToast('⚠️ Por favor escanea el QR de tu mesa para pedir', 'error'), 500);
+
+                // Desactivar boton flotante de Checkout
+                const btnCheckout = document.querySelector('#cartBar button');
+                if (btnCheckout) {
+                    btnCheckout.onclick = null;
+                    btnCheckout.classList.add('opacity-50', 'pointer-events-none', 'grayscale');
+                }
+
+                if (display) {
+                    display.classList.remove('text-amber-500', 'border-amber-500/40');
+                    display.classList.add('text-red-400', 'border-red-500/40');
+                    display.innerHTML = '⚠️ QR no detectado';
+                }
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', checkUrlMesa);
 
         function closeCartModal() {
             if (navigator.vibrate) navigator.vibrate(40);
@@ -1239,20 +1549,19 @@
             const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxLyallT2NNIfT6inzajJrouL510bjR27dLxIpwGo5_yFWXHv0cCJ9kDeSj4ZFL6LOe/exec';
 
             const name = document.getElementById('orderName').value.trim();
-            const phone = document.getElementById('orderPhone').value.trim();
-            const address = document.getElementById('orderAddress').value.trim();
+            const mesa = document.getElementById('orderMesa').value.trim();
             const notes = document.getElementById('orderNotes').value.trim();
 
-            if (!name || !phone || !address) {
-                showToast('Please fill in all required fields', 'error');
+            if (!mesa) {
+                showToast('Error: No se detectó la mesa. Por favor, escanea el código QR de tu mesa.', 'error');
                 return;
             }
-            if (phone.length < 10) {
-                showToast('Please enter a valid 10-digit phone number', 'error');
+            if (!name) {
+                showToast('Please enter your full name', 'error');
                 return;
             }
 
-            const userData = { name, phone, address };
+            const userData = { name, mesa };
             localStorage.setItem('elPatoUser', JSON.stringify(userData));
 
             const btn = document.querySelector('button[onclick="sendOrder()"]');
@@ -1275,8 +1584,7 @@
                     },
                     body: JSON.stringify({
                         nombre: name,
-                        telefono: phone,
-                        direccion: address,
+                        mesa: mesa,
                         notas: notes,
                         pedido: orderString,
                         total: totalString
@@ -1340,9 +1648,9 @@
         function reorderPastOrder(index) {
             if (navigator.vibrate) navigator.vibrate(40);
             let history = JSON.parse(localStorage.getItem('elPatoOrderHistory') || '[]');
-            if(history[index]) {
+            if (history[index]) {
                 // Copia profunda de los items para no alterar el historial
-                cart = JSON.parse(JSON.stringify(history[index].items)); 
+                cart = JSON.parse(JSON.stringify(history[index].items));
                 saveCart();
                 updateCartUI();
                 closeHistory();
