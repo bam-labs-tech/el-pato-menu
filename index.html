@@ -1043,7 +1043,7 @@
     </main>
 
     <!-- ═══ CALL WAITER BUTTON ═══ -->
-    <button onclick="callWaiter()" id="waiterBtn"
+    <button onclick="openWaiterOptions()" id="waiterBtn"
         class="fixed bottom-6 left-6 z-40 bg-zinc-800 text-zinc-300 border border-white/10 rounded-full px-4 py-3 shadow-[0_8px_30px_rgba(0,0,0,0.5)] flex items-center gap-2 font-bold text-sm transition-all duration-300 active:scale-95 hover:bg-zinc-700 hover:text-white group truncate max-w-[calc(100vw-3rem)]">
         <span class="text-lg group-hover:animate-bounce">🔔</span>
         <span class="hidden sm:inline-block">Llamar Mesero</span>
@@ -1118,6 +1118,36 @@
             else { icon.innerHTML = '🌙'; title.textContent = 'Good evening! Welcome to El Pato'; }
         })();
     </script>
+
+    <!-- ═══ WAITER OPTIONS MODAL (ACTION SHEET) ═══ -->
+    <div id="waiterOptionsModal" class="fixed inset-0 z-[60] hidden flex-col justify-end">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity opacity-0" id="waiterModalBackdrop" onclick="closeWaiterOptions()"></div>
+        
+        <div class="relative bg-zinc-900 rounded-t-3xl border-t border-white/10 p-6 pb-8 transform translate-y-full transition-transform duration-300 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col gap-3" id="waiterModalContent">
+            <h3 class="text-white text-lg font-bold text-center mb-3">¿Para qué necesitas al mesero?</h3>
+            
+            <button onclick="callWaiter('La Cuenta')" class="w-full bg-zinc-800 text-white p-4 rounded-xl flex items-center justify-start gap-4 hover:bg-zinc-700 active:scale-95 transition-all text-left border border-white/5">
+                <span class="text-2xl">💳</span>
+                <span class="font-medium text-lg text-zinc-200">La Cuenta, por favor</span>
+            </button>
+            <button onclick="callWaiter('Servilletas/Cubiertos')" class="w-full bg-zinc-800 text-white p-4 rounded-xl flex items-center justify-start gap-4 hover:bg-zinc-700 active:scale-95 transition-all text-left border border-white/5">
+                <span class="text-2xl">🧻</span>
+                <span class="font-medium text-lg text-zinc-200">Faltan servilletas / cubiertos</span>
+            </button>
+            <button onclick="callWaiter('Limpiar la mesa')" class="w-full bg-zinc-800 text-white p-4 rounded-xl flex items-center justify-start gap-4 hover:bg-zinc-700 active:scale-95 transition-all text-left border border-white/5">
+                <span class="text-2xl">🧹</span>
+                <span class="font-medium text-lg text-zinc-200">Limpiar la mesa</span>
+            </button>
+            <button onclick="callWaiter('Otra solicitud')" class="w-full bg-zinc-800 text-white p-4 rounded-xl flex items-center justify-start gap-4 hover:bg-zinc-700 active:scale-95 transition-all text-left border border-white/5">
+                <span class="text-2xl">🙋‍♂️</span>
+                <span class="font-medium text-lg text-zinc-200">Otra solicitud</span>
+            </button>
+
+            <button onclick="closeWaiterOptions()" class="w-full mt-2 text-zinc-400 p-3 rounded-xl hover:text-white transition-colors font-medium text-sm text-center tracking-wide uppercase">
+                Cancelar
+            </button>
+        </div>
+    </div>
 
     <!-- ═══ CART MODAL (BOTTOM SHEET) ═══ -->
     <div id="cartModal" class="fixed inset-0 z-[60] hidden">
@@ -1359,7 +1389,39 @@
             document.getElementById('cartView').classList.add('flex');
         }
 
-        async function callWaiter() {
+        function openWaiterOptions() {
+            if (navigator.vibrate) navigator.vibrate(40);
+            const modal = document.getElementById('waiterOptionsModal');
+            const backdrop = document.getElementById('waiterModalBackdrop');
+            const content = document.getElementById('waiterModalContent');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                content.classList.remove('translate-y-full');
+            }, 10);
+        }
+
+        function closeWaiterOptions() {
+            const backdrop = document.getElementById('waiterModalBackdrop');
+            const content = document.getElementById('waiterModalContent');
+            
+            backdrop.classList.add('opacity-0');
+            content.classList.add('translate-y-full');
+
+            setTimeout(() => {
+                const modal = document.getElementById('waiterOptionsModal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+
+        async function callWaiter(reason) {
+            closeWaiterOptions();
             if (navigator.vibrate) navigator.vibrate(40);
             const mesaValue = document.getElementById('orderMesa').value.trim();
             const btn = document.getElementById('waiterBtn');
@@ -1383,8 +1445,8 @@
                     body: JSON.stringify({
                         nombre: 'Mesa ' + mesaValue,
                         mesa: mesaValue,
-                        notas: 'Llamada de asistencia',
-                        pedido: '🔔 ASISTENCIA REQUERIDA',
+                        notas: 'Llamada de asistencia: ' + reason,
+                        pedido: '1x ' + reason,
                         total: 0
                     })
                 });
