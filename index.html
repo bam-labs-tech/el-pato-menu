@@ -1270,9 +1270,32 @@
         class="fixed bottom-10 left-1/2 -translate-x-1/2 z-[70] flex flex-col gap-3 pointer-events-none items-center w-full max-w-sm px-4">
     </div>
 
+    <!-- ═══ UPSELL MODAL ═══ -->
+    <div id="upsellModal" class="fixed inset-0 z-[65] hidden flex-col justify-center items-center px-4">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity opacity-0" id="upsellModalBackdrop"></div>
+        <div class="relative bg-zinc-900 border border-amber-500/40 rounded-3xl p-6 w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300 shadow-[0_0_40px_rgba(245,158,11,0.2)] flex flex-col gap-3 text-center" id="upsellModalContent">
+            <h3 class="text-amber-400 text-2xl font-bold font-fancy mb-1">¿Hacerlo aún mejor?</h3>
+            <p class="text-zinc-400 text-sm mb-4">Agrega un delicioso extra a tu platillo</p>
+            
+            <button onclick="confirmUpsell('🥑 Extra Aguacate', 2.00)" class="w-full bg-dark-800 text-white p-4 rounded-xl flex items-center justify-between hover:bg-zinc-700 active:scale-95 transition-all border border-white/5 shadow-sm">
+                <span class="font-bold text-lg">🥑 Extra Aguacate</span>
+                <span class="text-amber-400 font-bold">+$2.00</span>
+            </button>
+            <button onclick="confirmUpsell('🧀 Extra Queso', 1.50)" class="w-full bg-dark-800 text-white p-4 rounded-xl flex items-center justify-between hover:bg-zinc-700 active:scale-95 transition-all border border-white/5 shadow-sm">
+                <span class="font-bold text-lg">🧀 Extra Queso</span>
+                <span class="text-amber-400 font-bold">+$1.50</span>
+            </button>
+
+            <button onclick="declineUpsell()" class="w-full mt-3 text-zinc-500 p-3 rounded-xl hover:text-zinc-300 transition-colors font-medium text-sm text-center">
+                No gracias, agregar al carrito
+            </button>
+        </div>
+    </div>
+
     <!-- ═══ CART LOGIC ═══ -->
     <script>
         let cart = JSON.parse(localStorage.getItem('elPatoCart') || '[]');
+        let tempUpsellItem = null;
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
@@ -1321,8 +1344,70 @@
             });
         }
 
-        function addToCart(name, price) {
+        function openUpsellModal() {
             if (navigator.vibrate) navigator.vibrate(40);
+            const modal = document.getElementById('upsellModal');
+            const backdrop = document.getElementById('upsellModalBackdrop');
+            const content = document.getElementById('upsellModalContent');
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.classList.add('overflow-hidden');
+
+            setTimeout(() => {
+                backdrop.classList.remove('opacity-0');
+                content.classList.remove('scale-95', 'opacity-0');
+                content.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        function closeUpsellModal() {
+            const modal = document.getElementById('upsellModal');
+            const backdrop = document.getElementById('upsellModalBackdrop');
+            const content = document.getElementById('upsellModalContent');
+            
+            backdrop.classList.add('opacity-0');
+            content.classList.remove('scale-100', 'opacity-100');
+            content.classList.add('scale-95', 'opacity-0');
+
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                document.body.classList.remove('overflow-hidden');
+            }, 300);
+        }
+
+        function confirmUpsell(extraName, extraPrice) {
+            if (!tempUpsellItem) return;
+            const newName = `${tempUpsellItem.name} + ${extraName}`;
+            const newPrice = tempUpsellItem.price + extraPrice;
+            
+            closeUpsellModal();
+            addToCart(newName, newPrice, true);
+            tempUpsellItem = null;
+        }
+
+        function declineUpsell() {
+            if (!tempUpsellItem) return;
+            closeUpsellModal();
+            addToCart(tempUpsellItem.name, tempUpsellItem.price, true);
+            tempUpsellItem = null;
+        }
+
+        function addToCart(name, price, skipUpsell = false) {
+            if (navigator.vibrate) navigator.vibrate(40);
+
+            if (!skipUpsell) {
+                const upsellKeywords = ['Tacos', 'Huevos', 'Chilaquiles', 'Carne'];
+                const shouldUpsell = upsellKeywords.some(keyword => name.includes(keyword));
+                
+                if (shouldUpsell) {
+                    tempUpsellItem = { name, price };
+                    openUpsellModal();
+                    return;
+                }
+            }
+
             const existingItem = cart.find(item => item.name === name);
             if (existingItem) {
                 existingItem.qty = (existingItem.qty || 1) + 1;
@@ -1334,8 +1419,10 @@
 
             // Mini feedback animation
             const bar = document.getElementById('cartBar');
-            bar.classList.add('scale-[1.02]');
-            setTimeout(() => bar.classList.remove('scale-[1.02]'), 150);
+            if (bar) {
+                bar.classList.add('scale-[1.02]');
+                setTimeout(() => bar.classList.remove('scale-[1.02]'), 150);
+            }
         }
 
         function saveCart() {
