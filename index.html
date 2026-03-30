@@ -13,13 +13,16 @@
             theme: {
                 extend: {
                     fontFamily: { body: ['Inter', 'sans-serif'], fancy: ['Playfair Display', 'Georgia', 'serif'] },
-                    colors: { dark: { 800: '#1a1a1f', 900: '#111114', 950: '#09090b' } },
+                    colors: { dark: { 700: '#222228', 800: '#1a1a1f', 900: '#111114', 950: '#09090b' } },
                     boxShadow: {
-                        float: '0 10px 50px rgba(0,0,0,0.50), 0 4px 16px rgba(0,0,0,0.35)',
-                        'float-lg': '0 14px 60px rgba(0,0,0,0.55), 0 6px 20px rgba(0,0,0,0.4)',
-                        sink: '0 2px 6px rgba(0,0,0,0.4)',
-                        glow: '0 0 40px rgba(245,158,11,0.15)',
-                        fab: '0 6px 28px rgba(245,158,11,0.45), 0 2px 10px rgba(0,0,0,0.2)'
+                        float: '0 8px 32px rgba(0,0,0,0.35), 0 2px 8px rgba(0,0,0,0.2)',
+                        'float-lg': '0 12px 48px rgba(0,0,0,0.45), 0 4px 14px rgba(0,0,0,0.3)',
+                        sink: '0 1px 4px rgba(0,0,0,0.35)',
+                        glow: '0 0 40px rgba(245,158,11,0.12), 0 0 80px rgba(245,158,11,0.06)',
+                        fab: '0 6px 24px rgba(245,158,11,0.40), 0 2px 8px rgba(0,0,0,0.25)',
+                        glass: '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)',
+                        'card-premium': '0 4px 24px rgba(0,0,0,0.30), 0 1px 4px rgba(0,0,0,0.15)',
+                        'card-hover': '0 8px 40px rgba(0,0,0,0.40), 0 2px 8px rgba(0,0,0,0.20)'
                     }
                 }
             }
@@ -36,6 +39,7 @@
             background: #09090b;
             color: #f4f4f5;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .font-fancy {
@@ -43,56 +47,35 @@
         }
 
         ::-webkit-scrollbar {
-            width: 5px
+            width: 4px
         }
 
         ::-webkit-scrollbar-track {
-            background: #09090b
+            background: transparent
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #f59e0b;
-            border-radius: 3px
+            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+            border-radius: 4px
         }
 
+        /* ── Floating animation ── */
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0)
-            }
-
-            50% {
-                transform: translateY(-5px)
-            }
+            0%, 100% { transform: translateY(0) }
+            50% { transform: translateY(-4px) }
         }
 
         .card-float {
-            animation: float 4.5s ease-in-out infinite
+            animation: float 5s ease-in-out infinite
         }
+        .card-float:nth-child(2) { animation-delay: .8s }
+        .card-float:nth-child(3) { animation-delay: 1.6s }
+        .card-float:nth-child(4) { animation-delay: 2.4s }
 
-        .card-float:nth-child(2) {
-            animation-delay: .7s
-        }
-
-        .card-float:nth-child(3) {
-            animation-delay: 1.4s
-        }
-
-        .card-float:nth-child(4) {
-            animation-delay: 2.1s
-        }
-
+        /* ── Card entrance ── */
         @keyframes riseIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(.97)
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1)
-            }
+            from { opacity: 0; transform: translateY(24px) scale(.98) }
+            to { opacity: 1; transform: translateY(0) scale(1) }
         }
 
         .card-enter {
@@ -101,66 +84,134 @@
         }
 
         .card-enter.visible {
-            animation: riseIn .6s cubic-bezier(.16, 1, .3, 1) both
+            animation: riseIn .55s cubic-bezier(.16, 1, .3, 1) both
         }
 
+        /* ── Card press effect ── */
         .card-sink {
-            transition: transform .2s ease, box-shadow .2s ease
+            transition: transform .22s cubic-bezier(.25, .46, .45, .94), box-shadow .22s ease
         }
 
         .card-sink:active {
-            transform: scale(.96) translateY(3px) !important;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, .5) !important;
+            transform: scale(.97) translateY(2px) !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .45) !important;
             animation-play-state: paused
         }
 
+        /* ── Nav pill ── */
         .nav-pill {
-            transition: all .25s ease
+            transition: all .3s cubic-bezier(.25, .46, .45, .94)
         }
 
         .nav-pill.active {
-            background: rgba(245, 158, 11, .15);
+            background: rgba(245, 158, 11, .12);
             color: #fbbf24;
-            border-color: rgba(245, 158, 11, .3);
-            box-shadow: 0 0 14px rgba(245, 158, 11, .12)
+            border-color: rgba(245, 158, 11, .25);
+            box-shadow: 0 0 20px rgba(245, 158, 11, .10), inset 0 1px 0 rgba(255, 255, 255, .05)
         }
 
-        .hide-scroll::-webkit-scrollbar {
-            display: none
-        }
+        /* ── Hide scrollbar ── */
+        .hide-scroll::-webkit-scrollbar { display: none }
+        .hide-scroll { scrollbar-width: none }
 
-        .hide-scroll {
-            scrollbar-width: none
-        }
-
+        /* ── Badge animation ── */
         @keyframes pulse-ring {
-
-            0%,
-            100% {
-                opacity: 0;
-                transform: scale(1)
-            }
-
-            50% {
-                opacity: .2;
-                transform: scale(1.12)
-            }
+            0%, 100% { opacity: 0; transform: scale(1) }
+            50% { opacity: .2; transform: scale(1.12) }
         }
 
         @keyframes badge-bob {
-
-            0%,
-            100% {
-                transform: translateY(0)
-            }
-
-            50% {
-                transform: translateY(-2px)
-            }
+            0%, 100% { transform: translateY(0) }
+            50% { transform: translateY(-2px) }
         }
 
         .badge-float {
             animation: badge-bob 3s ease-in-out infinite
+        }
+
+        /* ── Premium card image shimmer ── */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) }
+            100% { transform: translateX(100%) }
+        }
+
+        .card-img-wrap {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,.06) 50%, transparent 60%);
+            transform: translateX(-100%);
+            pointer-events: none;
+        }
+
+        .group:hover .card-img-wrap::after {
+            animation: shimmer 1.2s ease-in-out;
+        }
+
+        /* ── Glass morphism surface ── */
+        .glass-surface {
+            background: rgba(17, 17, 20, 0.65);
+            backdrop-filter: blur(24px) saturate(1.8);
+            -webkit-backdrop-filter: blur(24px) saturate(1.8);
+            border-bottom: 1px solid rgba(255, 255, 255, .06);
+        }
+
+        .glass-surface-strong {
+            background: rgba(9, 9, 11, 0.78);
+            backdrop-filter: blur(32px) saturate(1.6);
+            -webkit-backdrop-filter: blur(32px) saturate(1.6);
+        }
+
+        /* ── Bottom Sheet sliding ── */
+        .sheet-panel {
+            transition: transform .4s cubic-bezier(.32, .72, 0, 1);
+        }
+
+        /* ── Premium image ring glow ── */
+        .img-ring {
+            box-shadow: 0 0 0 1px rgba(245, 158, 11, .08), 0 4px 16px rgba(0,0,0,.3);
+        }
+
+        /* ── Subtle card gradient overlay ── */
+        .card-premium {
+            background: linear-gradient(135deg, rgba(26, 26, 31, .7) 0%, rgba(17, 17, 20, .8) 100%);
+            border: 1px solid rgba(255, 255, 255, .05);
+        }
+
+        .card-premium:hover {
+            border-color: rgba(245, 158, 11, .12);
+        }
+
+        /* ── Button press haptic ── */
+        .btn-haptic {
+            transition: transform .15s cubic-bezier(.25, .46, .45, .94), box-shadow .15s ease;
+        }
+        .btn-haptic:active {
+            transform: scale(.95) !important;
+        }
+
+        /* ── Modal backdrop transition ── */
+        .modal-backdrop {
+            transition: opacity .35s ease;
+        }
+
+        /* ── Floating cart bar glass ── */
+        .cart-glass {
+            background: rgba(9, 9, 11, 0.82);
+            backdrop-filter: blur(28px) saturate(1.5);
+            -webkit-backdrop-filter: blur(28px) saturate(1.5);
+            border-top: 1px solid rgba(255, 255, 255, .08);
+            box-shadow: 0 -8px 40px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .04);
+        }
+
+        /* ── Price tag glow ── */
+        .price-glow {
+            text-shadow: 0 0 20px rgba(245, 158, 11, .25);
         }
     </style>
 </head>
@@ -168,16 +219,16 @@
 <body class="pb-28">
 
     <!-- ═══ HEADER ═══ -->
-    <header id="header" class="sticky top-0 z-50 backdrop-blur-xl bg-dark-950/80 border-b border-white/5">
-        <div class="max-w-2xl mx-auto px-5 py-3.5 flex items-center justify-between w-full">
+    <header id="header" class="sticky top-0 z-50 glass-surface">
+        <div class="max-w-2xl mx-auto px-5 py-3 flex items-center justify-between w-full">
             <!-- Left spacer to maintain perfect horizontal centering of the branding -->
             <div class="w-[50px] invisible sm:w-[50px]"></div>
 
             <div
-                class="bg-dark-800/80 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 shadow-float flex items-center gap-3">
-                <span class="text-3xl">🦆</span>
+                class="bg-dark-800/60 backdrop-blur-md border border-white/[0.08] rounded-full px-6 py-2.5 shadow-glass flex items-center gap-3">
+                <span class="text-3xl drop-shadow-[0_2px_8px_rgba(245,158,11,0.2)]">🦆</span>
                 <div class="text-center">
-                    <h1 class="text-xl font-extrabold text-amber-400 tracking-tight font-fancy">Restaurante El Pato</h1>
+                    <h1 class="text-xl font-extrabold text-amber-400 tracking-tight font-fancy drop-shadow-[0_0_12px_rgba(245,158,11,0.15)]">Restaurante El Pato</h1>
                     <p class="text-[10px] font-medium text-zinc-500 tracking-[0.2em] uppercase">Authentic Mexican Food
                         since 1999</p>
                 </div>
@@ -185,7 +236,7 @@
 
             <!-- History Button -->
             <button onclick="openHistory()"
-                class="bg-dark-800/80 backdrop-blur-sm border border-white/10 p-3 rounded-full text-amber-400 shadow-float active:scale-95 transition-all outline-none focus:ring-2 focus:ring-amber-500/50">
+                class="bg-dark-800/60 backdrop-blur-md border border-white/[0.08] p-3 rounded-full text-amber-400 shadow-glass btn-haptic outline-none focus:ring-2 focus:ring-amber-500/40 hover:border-amber-500/20 hover:shadow-glow">
                 <span class="text-xl leading-none block"><svg class="w-6 h-6" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -197,10 +248,10 @@
     </header>
 
     <!-- ═══ NAV TABS ═══ -->
-    <nav id="tabs" class="sticky top-[76px] z-40 bg-dark-950/70 backdrop-blur-lg border-b border-white/5">
-        <ul class="hide-scroll flex gap-2.5 px-4 py-3 overflow-x-auto" role="tablist">
+    <nav id="tabs" class="sticky top-[73px] z-40 glass-surface-strong">
+        <ul class="hide-scroll flex gap-2 px-4 py-2.5 overflow-x-auto" role="tablist">
             <li><button
-                    class="nav-pill active text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
+                    class="nav-pill active text-sm font-semibold px-5 py-2.5 rounded-full border border-white/[0.08] bg-dark-800/50 text-zinc-400 whitespace-nowrap"
                     data-cat="breakfast">
                     <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
                         viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
@@ -212,7 +263,7 @@
                     Breakfast
                 </button></li>
             <li><button
-                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
+                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/[0.08] bg-dark-800/50 text-zinc-400 whitespace-nowrap"
                     data-cat="tortas">
                     <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
                         viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
@@ -225,7 +276,7 @@
                     Tortas
                 </button></li>
             <li><button
-                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
+                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/[0.08] bg-dark-800/50 text-zinc-400 whitespace-nowrap"
                     data-cat="tacos-mains">
                     <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="#f59e0b">
@@ -239,7 +290,7 @@
                     Tacos &amp; Mains
                 </button></li>
             <li><button
-                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
+                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/[0.08] bg-dark-800/50 text-zinc-400 whitespace-nowrap"
                     data-cat="soups">
                     <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
                         viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
@@ -251,7 +302,7 @@
                     Soups
                 </button></li>
             <li><button
-                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/10 bg-dark-800/60 text-zinc-400 whitespace-nowrap"
+                    class="nav-pill text-sm font-semibold px-5 py-2.5 rounded-full border border-white/[0.08] bg-dark-800/50 text-zinc-400 whitespace-nowrap"
                     data-cat="drinks">
                     <svg class="w-7 h-7 inline-block -mt-1 mr-1.5 drop-shadow-[0_0_8px_rgba(245,158,11,0.3)]"
                         viewBox="0 0 24 24" fill="#f59e0b" xmlns="http://www.w3.org/2000/svg">
@@ -271,11 +322,11 @@
 
         <!-- Welcome -->
         <div
-            class="bg-amber-500/10 border border-amber-500/20 rounded-3xl px-6 py-5 mb-10 flex items-center gap-4 backdrop-blur-sm shadow-glow">
-            <span class="text-4xl" id="greetIcon">👋</span>
+            class="bg-gradient-to-br from-amber-500/[0.08] to-amber-600/[0.04] border border-amber-500/15 rounded-[20px] px-6 py-5 mb-10 flex items-center gap-4 backdrop-blur-sm shadow-glow">
+            <span class="text-4xl drop-shadow-[0_2px_8px_rgba(245,158,11,0.2)]" id="greetIcon">👋</span>
             <div>
                 <p class="text-lg font-bold text-amber-300 font-fancy" id="greetTitle">Welcome to El Pato!</p>
-                <p class="text-sm text-zinc-400 mt-0.5">Browse our menu and order with your server.</p>
+                <p class="text-sm text-zinc-400/80 mt-0.5">Browse our menu and order with your server.</p>
             </div>
         </div>
 
@@ -297,8 +348,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="eggs_ranchero.png" alt="Huevos Rancheros"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -306,7 +357,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Huevos Rancheros</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$18.38</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$18.38</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Served with rice, beans, and fresh tortillas.
                     </p>
@@ -315,8 +366,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="chilaquiles_verdes.png" alt="Chilaquiles Verdes"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -324,7 +375,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Chilaquiles Verdes</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$20.72</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$20.72</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Tortilla chips in green salsa, sour cream,
                         cheese, and eggs.</p>
@@ -363,8 +414,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="cubana_torta.png" alt="Cubana Torta"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -382,7 +433,7 @@
                                 </svg>
                                 Bestseller</span>
                         </h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$21.10</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$21.10</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Milanesa, ham, cheese, egg, avocado on a fresh
                         telera roll.</p>
@@ -411,8 +462,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="hawaiian_torta.png" alt="Hawaiian Torta"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -420,7 +471,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Hawaiian Torta</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$21.10</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$21.10</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Ham, pineapple, and melted cheese with spicy
                         chipotle.</p>
@@ -469,8 +520,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="tacos_dorados.png" alt="Tacos Dorados"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -478,7 +529,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Tacos Dorados (3 pcs)</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$14.83</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$14.83</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Crispy tacos filled with beef or chicken,
                         lettuce, cream.</p>
@@ -487,8 +538,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="shrimp_tacos.png" alt="Shrimp Tacos"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -496,7 +547,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Shrimp Tacos (2 pcs)</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$19.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$19.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Grilled shrimp on corn tortillas with chipotle
                         slaw.</p>
@@ -516,8 +567,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="carne_asada.png" alt="Carne Asada Plate"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -535,7 +586,7 @@
                                 </svg>
                                 Chef's Pick</span>
                         </h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$24.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$24.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Charbroiled steak served with rice, beans,
                         guacamole.</p>
@@ -555,8 +606,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="enchiladas_suizas.png" alt="Enchiladas Suizas"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -564,7 +615,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Enchiladas Suizas</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$19.95</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$19.95</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Three chicken enchiladas in green sauce with
                         melted Swiss cheese.</p>
@@ -602,8 +653,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="caldo_de_res.png" alt="Caldo de Res"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -611,7 +662,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Caldo de Res</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$21.93</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$21.93</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Hearty beef soup with fresh vegetables, served
                         with rice.</p>
@@ -620,8 +671,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="menudo_soup.png" alt="Menudo"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -629,7 +680,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Menudo</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$18.99</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$18.99</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Traditional spicy tripe soup with hominy and
                         lime.</p>
@@ -694,8 +745,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="horchata.png" alt="Agua de Horchata"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -713,7 +764,7 @@
                                 </svg>
                                 Bestseller</span>
                         </h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$4.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$4.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Traditional sweet rice and cinnamon drink.</p>
                     <div class="action-btn-container" data-name="Agua de Horchata" data-price="4.50"></div>
@@ -721,8 +772,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="agua_jamaica.png" alt="Agua de Jamaica"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -730,7 +781,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Agua de Jamaica</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$4.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$4.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Refreshing cold hibiscus tea.</p>
                     <div class="action-btn-container" data-name="Agua de Jamaica" data-price="4.50"></div>
@@ -738,8 +789,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="mexican_coke.png" alt="Mexican Coke"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -757,7 +808,7 @@
                                 </svg>
                                 Classic</span>
                         </h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$3.99</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$3.99</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Classic glass bottle with real cane sugar.</p>
                     <div class="action-btn-container" data-name="Mexican Coke" data-price="3.99"></div>
@@ -765,8 +816,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="jarritos.png" alt="Jarritos"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -774,7 +825,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Jarritos</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$3.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$3.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Assorted flavors (Tamarind, Mandarin, Fruit
                         Punch).</p>
@@ -783,8 +834,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="sidral_mundet.png" alt="Sidral Mundet"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -792,7 +843,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Sidral Mundet</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$3.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$3.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Apple soda.</p>
                     <div class="action-btn-container" data-name="Sidral Mundet" data-price="3.50"></div>
@@ -816,8 +867,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="cafe_de_olla.png" alt="Café de Olla"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -835,7 +886,7 @@
                                 </svg>
                                 Morning Favorite</span>
                         </h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$3.99</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$3.99</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Traditional Mexican coffee with cinnamon and
                         piloncillo.</p>
@@ -844,8 +895,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="champurrado.png" alt="Champurrado"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -853,7 +904,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Champurrado</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$4.99</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$4.99</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Thick, warm chocolate-based Mexican drink.</p>
                     <div class="action-btn-container" data-name="Champurrado" data-price="4.99"></div>
@@ -879,8 +930,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="mexican_beers.png" alt="Modelo Especial"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -888,15 +939,15 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Modelo Especial</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$6.00</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$6.00</span>
                     </div>
                     <div class="action-btn-container" data-name="Modelo Especial" data-price="6.00"></div>
                 </div>
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="mexican_beers.png" alt="Corona Extra"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -904,15 +955,15 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Corona Extra</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$6.00</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$6.00</span>
                     </div>
                     <div class="action-btn-container" data-name="Corona Extra" data-price="6.00"></div>
                 </div>
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="mexican_beers.png" alt="Victoria"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -920,15 +971,15 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Victoria</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$6.00</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$6.00</span>
                     </div>
                     <div class="action-btn-container" data-name="Victoria" data-price="6.00"></div>
                 </div>
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="mexican_beers.png" alt="Pacífico"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -936,7 +987,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Pacífico</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$6.00</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$6.00</span>
                     </div>
                     <div class="action-btn-container" data-name="Pacífico" data-price="6.00"></div>
                 </div>
@@ -958,8 +1009,8 @@
             </div>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="classic_margarita.png" alt="Classic Margarita"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -977,7 +1028,7 @@
                                 </svg>
                                 House Special</span>
                         </h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$10.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$10.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Tequila, fresh lime juice, agave, salt rim.
                     </p>
@@ -986,8 +1037,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="michelada.png" alt="Michelada"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -995,7 +1046,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Michelada</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$9.50</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$9.50</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Your choice of beer with Clamato, lime, and
                         our special spicy rim.</p>
@@ -1015,8 +1066,8 @@
             </article>
 
             <article
-                class="card-enter card-float card-sink bg-dark-800/60 border border-white/[0.06] rounded-3xl p-5 mb-5 shadow-float flex gap-5 relative overflow-hidden group">
-                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl overflow-hidden flex-shrink-0 bg-dark-900">
+                class="card-enter card-float card-sink card-premium rounded-[20px] p-4 mb-5 shadow-card-premium flex gap-4 relative overflow-hidden group hover:shadow-card-hover transition-shadow duration-300">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl overflow-hidden flex-shrink-0 bg-dark-900 card-img-wrap img-ring">
                     <img src="cantarito.png" alt="Cantarito"
                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         loading="lazy">
@@ -1024,7 +1075,7 @@
                 <div class="flex-1 min-w-0 flex flex-col justify-center">
                     <div class="flex items-start justify-between gap-3">
                         <h3 class="text-lg font-bold text-zinc-100 font-fancy leading-tight">Cantarito</h3>
-                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap">$12.00</span>
+                        <span class="text-lg font-extrabold text-amber-400 whitespace-nowrap price-glow">$12.00</span>
                     </div>
                     <p class="text-sm text-zinc-400 mt-2 leading-relaxed">Tequila with fresh citrus juices and
                         grapefruit soda in a clay cup.</p>
@@ -1044,15 +1095,15 @@
 
     <!-- ═══ FLOATING CART BAR ═══ -->
     <div id="cartBar"
-        class="fixed bottom-0 left-0 w-full z-50 bg-dark-950/90 backdrop-blur-xl rounded-t-3xl shadow-[0_-8px_30px_rgba(0,0,0,0.4)] border-t border-white/10 px-6 py-4 flex items-center justify-between transition-all duration-300 translate-y-full">
+        class="fixed bottom-0 left-0 w-full z-50 cart-glass rounded-t-[24px] px-6 py-4 flex items-center justify-between transition-all duration-300 translate-y-full">
         <div>
-            <p class="text-xs text-zinc-500 font-medium uppercase tracking-wider">Total</p>
-            <p id="cartTotal" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</p>
+            <p class="text-[10px] text-zinc-500 font-semibold uppercase tracking-widest">Total</p>
+            <p id="cartTotal" class="text-2xl font-extrabold text-amber-400 font-fancy price-glow">$0.00</p>
         </div>
         <div class="flex items-center gap-3">
             <span id="cartCount" class="text-sm text-zinc-400 font-medium">0 items</span>
             <button onclick="processCheckout()"
-                class="px-7 py-3 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold rounded-full shadow-fab active:scale-95 transition-all duration-200 hover:shadow-[0_8px_36px_rgba(245,158,11,0.5)]">Checkout
+                class="px-7 py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-full shadow-fab btn-haptic hover:shadow-[0_8px_36px_rgba(245,158,11,0.5)] hover:from-amber-400 hover:to-orange-500">Checkout
                 <svg class="w-5 h-5 inline-block ml-1" fill="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -1115,19 +1166,19 @@
     <!-- ═══ CART MODAL (BOTTOM SHEET) ═══ -->
     <div id="cartModal" class="fixed inset-0 z-[60] hidden">
         <!-- Overlay -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="closeCartModal()"></div>
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-md modal-backdrop" onclick="closeCartModal()"></div>
 
         <!-- Bottom Sheet -->
-        <div class="absolute bottom-0 left-0 w-full bg-dark-900 rounded-t-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col max-h-[85vh] transition-transform duration-300 translate-y-full overflow-hidden"
+        <div class="absolute bottom-0 left-0 w-full bg-dark-900 rounded-t-[28px] border-t border-white/[0.08] shadow-[0_-12px_48px_rgba(0,0,0,0.55)] flex flex-col max-h-[85vh] sheet-panel translate-y-full overflow-hidden"
             id="cartSheet">
 
             <!-- STEP 1: CART VIEW -->
             <div id="cartView" class="flex flex-col h-full max-h-[85vh]">
                 <!-- Header -->
-                <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 flex-none">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] flex-none">
                     <h2 class="text-xl font-bold text-zinc-100 font-fancy">Your Order</h2>
                     <button onclick="closeCartModal()"
-                        class="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
+                        class="w-9 h-9 flex items-center justify-center rounded-full bg-dark-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 btn-haptic border border-white/[0.06]">
                         <span class="text-lg font-bold leading-none">&times;</span>
                     </button>
                 </div>
@@ -1138,13 +1189,13 @@
                 </div>
 
                 <!-- Footer -->
-                <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50 flex-none">
+                <div class="px-6 py-4 border-t border-white/[0.06] bg-dark-950/60 backdrop-blur-sm flex-none">
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-zinc-400 font-medium">Total</span>
-                        <span id="modalTotal1" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</span>
+                        <span id="modalTotal1" class="text-2xl font-extrabold text-amber-400 font-fancy price-glow">$0.00</span>
                     </div>
                     <button onclick="goToCheckout()"
-                        class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
+                        class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-lg rounded-2xl shadow-fab btn-haptic">
                         Siguiente: Confirmar Mesa ➔
                     </button>
                 </div>
@@ -1153,10 +1204,10 @@
             <!-- STEP 2: CHECKOUT VIEW -->
             <div id="checkoutView" class="hidden flex-col h-full max-h-[85vh]">
                 <!-- Header -->
-                <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 flex-none mb-2">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] flex-none mb-2">
                     <div class="flex items-center gap-3">
                         <button onclick="goToCart()"
-                            class="w-8 h-8 flex flex-shrink-0 items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
+                            class="w-9 h-9 flex flex-shrink-0 items-center justify-center rounded-full bg-dark-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 btn-haptic border border-white/[0.06]">
                             <span class="font-bold leading-none text-xl mb-1">&larr;</span>
                         </button>
                         <h2 class="text-xl font-bold text-zinc-100 font-fancy truncate">Detalles de tu Mesa</h2>
@@ -1168,24 +1219,24 @@
                     <div class="space-y-4">
                         <input type="hidden" id="orderMesa" value="">
                         <div id="displayMesa"
-                            class="w-full bg-dark-900 border border-amber-500/40 text-amber-500 rounded-xl px-4 py-3 text-sm font-bold flex items-center shadow-glow mb-2">
+                            class="w-full bg-dark-900 border border-amber-500/30 text-amber-500 rounded-2xl px-4 py-3.5 text-sm font-bold flex items-center shadow-glow mb-2">
                             📍 Detectando mesa...
                         </div>
                         <input type="text" id="orderName" placeholder="Full Name"
-                            class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500">
+                            class="w-full bg-dark-800/80 text-zinc-200 border border-white/[0.08] rounded-2xl px-4 py-3.5 text-sm outline-none focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/40 transition-all placeholder-zinc-500">
                         <textarea id="orderNotes" placeholder="Order Notes (Optional)" rows="2"
-                            class="w-full bg-dark-800 text-zinc-200 border border-white/10 rounded-xl px-4 py-3 text-sm outline-none focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/50 transition-all placeholder-zinc-500 resize-none"></textarea>
+                            class="w-full bg-dark-800/80 text-zinc-200 border border-white/[0.08] rounded-2xl px-4 py-3.5 text-sm outline-none focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/40 transition-all placeholder-zinc-500 resize-none"></textarea>
                     </div>
                 </div>
 
                 <!-- Footer -->
-                <div class="px-6 py-5 border-t border-white/5 bg-dark-950/50 flex-none">
+                <div class="px-6 py-4 border-t border-white/[0.06] bg-dark-950/60 backdrop-blur-sm flex-none">
                     <div class="flex items-center justify-between mb-4">
                         <span class="text-zinc-400 font-medium">Total to pay</span>
-                        <span id="modalTotal2" class="text-2xl font-extrabold text-amber-400 font-fancy">$0.00</span>
+                        <span id="modalTotal2" class="text-2xl font-extrabold text-amber-400 font-fancy price-glow">$0.00</span>
                     </div>
                     <button onclick="sendOrder()"
-                        class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold text-lg rounded-2xl shadow-fab active:scale-[0.98] transition-all duration-200">
+                        class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-lg rounded-2xl shadow-fab btn-haptic">
                         Confirm &amp; Send Order
                     </button>
                 </div>
@@ -1204,7 +1255,7 @@
                 <p class="text-zinc-400 text-sm leading-relaxed mb-10">The kitchen has received your order.<br>Estimated
                     time: <span class="text-amber-400 font-bold">15-20 mins</span>.</p>
                 <button onclick="closeSuccessTicket()"
-                    class="w-full py-4 bg-dark-800 text-white font-bold text-lg rounded-2xl border border-white/10 active:scale-[0.98] transition-all duration-200 hover:bg-dark-700 hover:border-white/20">
+                    class="w-full py-4 bg-dark-800 text-white font-bold text-lg rounded-2xl border border-white/[0.08] btn-haptic hover:bg-dark-700 hover:border-white/15">
                     Back to Menu
                 </button>
             </div>
@@ -1213,14 +1264,14 @@
     </div>
 
     <!-- ═══ HISTORY MODAL ═══ -->
-    <div id="historyModal" class="fixed inset-0 z-[60] hidden bg-black/80 backdrop-blur-sm flex items-end">
-        <div class="absolute inset-0 bg-transparent transition-opacity" onclick="closeHistory()"></div>
-        <div class="w-full relative bg-dark-900 rounded-t-3xl border-t border-white/10 shadow-[0_-10px_40px_rgba(0,0,0,0.5)] flex flex-col max-h-[85vh] transition-transform duration-300 translate-y-full overflow-hidden"
+    <div id="historyModal" class="fixed inset-0 z-[60] hidden bg-black/70 backdrop-blur-md flex items-end">
+        <div class="absolute inset-0 bg-transparent modal-backdrop" onclick="closeHistory()"></div>
+        <div class="w-full relative bg-dark-900 rounded-t-[28px] border-t border-white/[0.08] shadow-[0_-12px_48px_rgba(0,0,0,0.55)] flex flex-col max-h-[85vh] sheet-panel translate-y-full overflow-hidden"
             id="historySheet">
-            <div class="flex items-center justify-between px-6 py-5 border-b border-white/5 flex-none mb-2">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-white/[0.06] flex-none mb-2">
                 <h2 class="text-xl font-bold text-zinc-100 font-fancy">🧾 My Past Orders</h2>
                 <button onclick="closeHistory()"
-                    class="w-8 h-8 flex items-center justify-center rounded-full bg-dark-800 text-zinc-400 hover:text-white hover:bg-zinc-700 transition-colors">
+                    class="w-9 h-9 flex items-center justify-center rounded-full bg-dark-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 btn-haptic border border-white/[0.06]">
                     <span class="text-lg font-bold leading-none">&times;</span>
                 </button>
             </div>
@@ -1235,21 +1286,21 @@
 
     <!-- ═══ UPSELL MODAL ═══ -->
     <div id="upsellModal" class="fixed inset-0 z-[65] hidden flex-col justify-center items-center px-4">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-md transition-opacity opacity-0" id="upsellModalBackdrop"></div>
-        <div class="relative bg-zinc-900 border border-amber-500/40 rounded-3xl p-6 w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300 shadow-[0_0_40px_rgba(245,158,11,0.2)] flex flex-col gap-3 text-center" id="upsellModalContent">
+        <div class="absolute inset-0 bg-black/70 backdrop-blur-lg transition-opacity opacity-0" id="upsellModalBackdrop"></div>
+        <div class="relative bg-dark-900 border border-amber-500/25 rounded-[28px] p-7 w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300 shadow-[0_0_60px_rgba(245,158,11,0.15),0_8px_32px_rgba(0,0,0,0.4)] flex flex-col gap-3 text-center" id="upsellModalContent">
             <h3 class="text-amber-400 text-2xl font-bold font-fancy mb-1">¿Hacerlo aún mejor?</h3>
-            <p class="text-zinc-400 text-sm mb-4">Agrega un delicioso extra a tu platillo</p>
+            <p class="text-zinc-400/80 text-sm mb-4">Agrega un delicioso extra a tu platillo</p>
             
-            <button onclick="confirmUpsell('🥑 Extra Aguacate', 2.00)" class="w-full bg-dark-800 text-white p-4 rounded-xl flex items-center justify-between hover:bg-zinc-700 active:scale-95 transition-all border border-white/5 shadow-sm">
+            <button onclick="confirmUpsell('🥑 Extra Aguacate', 2.00)" class="w-full bg-dark-800/80 text-white p-4 rounded-2xl flex items-center justify-between hover:bg-zinc-700 btn-haptic border border-white/[0.06] shadow-sm">
                 <span class="font-bold text-lg">🥑 Extra Aguacate</span>
-                <span class="text-amber-400 font-bold">+$2.00</span>
+                <span class="text-amber-400 font-bold price-glow">+$2.00</span>
             </button>
-            <button onclick="confirmUpsell('🧀 Extra Queso', 1.50)" class="w-full bg-dark-800 text-white p-4 rounded-xl flex items-center justify-between hover:bg-zinc-700 active:scale-95 transition-all border border-white/5 shadow-sm">
+            <button onclick="confirmUpsell('🧀 Extra Queso', 1.50)" class="w-full bg-dark-800/80 text-white p-4 rounded-2xl flex items-center justify-between hover:bg-zinc-700 btn-haptic border border-white/[0.06] shadow-sm">
                 <span class="font-bold text-lg">🧀 Extra Queso</span>
-                <span class="text-amber-400 font-bold">+$1.50</span>
+                <span class="text-amber-400 font-bold price-glow">+$1.50</span>
             </button>
 
-            <button onclick="declineUpsell()" class="w-full mt-3 text-zinc-500 p-3 rounded-xl hover:text-zinc-300 transition-colors font-medium text-sm text-center">
+            <button onclick="declineUpsell()" class="w-full mt-3 text-zinc-500 p-3 rounded-2xl hover:text-zinc-300 hover:bg-white/[0.03] transition-colors font-medium text-sm text-center">
                 No gracias, agregar al carrito
             </button>
         </div>
