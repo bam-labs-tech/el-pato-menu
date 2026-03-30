@@ -1296,7 +1296,7 @@
     <script>
         let cart = JSON.parse(localStorage.getItem('elPatoCart') || '[]');
         let tempUpsellItem = null;
-        let agotadosList = [];
+        window.agotadosGlobal = [];
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toastContainer');
@@ -1327,18 +1327,21 @@
             containers.forEach(container => {
                 const name = container.dataset.name;
                 const price = parseFloat(container.dataset.price);
+                const card = container.closest('article');
+                const img = card ? card.querySelector('img') : null;
 
-                if (agotadosList.includes(name)) {
-                    container.innerHTML = `<button disabled class="mt-3 px-4 py-1.5 text-xs font-bold bg-zinc-800 text-zinc-500 rounded-full cursor-not-allowed border border-white/5 disabled:opacity-80">Agotado Hoy 🚫</button>`;
-                    const card = container.closest('article');
-                    if (card) {
-                        const img = card.querySelector('img');
-                        if (img) {
-                            img.style.opacity = '0.4';
-                            img.style.filter = 'grayscale(100%)';
-                        }
+                if (window.agotadosGlobal && window.agotadosGlobal.includes(name)) {
+                    container.innerHTML = `<button disabled class="mt-3 px-4 py-1.5 text-xs font-bold bg-zinc-800 text-zinc-500 rounded-full cursor-not-allowed border border-white/5">Agotado Hoy 🚫</button>`;
+                    if (img) {
+                        img.classList.add('opacity-40', 'grayscale');
+                        img.style.opacity = '';
+                        img.style.filter = '';
                     }
                     return;
+                } else {
+                    if (img) {
+                        img.classList.remove('opacity-40', 'grayscale');
+                    }
                 }
 
                 const item = cart.find(i => i.name === name);
@@ -1893,7 +1896,7 @@
                 const data = await response.json();
                 
                 if (Array.isArray(data)) {
-                    agotadosList = data;
+                    window.agotadosGlobal = data;
                     renderProductButtons();
                 }
             } catch (error) {
@@ -1904,6 +1907,7 @@
         // Initialize cart UI on load
         updateCartUI();
         checkAgotados();
+        setInterval(checkAgotados, 15000);
     </script>
 </body>
 
