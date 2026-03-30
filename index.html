@@ -1088,7 +1088,7 @@
         <div class="text-center py-12 border-t border-white/5">
             <p class="text-sm text-zinc-500"><strong class="text-zinc-400">Mon – Sun</strong> &nbsp; 7:00 AM – 10:00 PM
             </p>
-            <p class="text-xs text-zinc-600 mt-1.5">📍 California · Exclusivo para consumo en el local</p>
+            <p class="text-xs text-zinc-600 mt-1.5">📍 California · Dine-in only</p>
             <p class="text-[11px] text-zinc-700 mt-5">© 2026 Restaurante El Pato. All rights reserved.</p>
         </div>
     </main>
@@ -1196,7 +1196,7 @@
                     </div>
                     <button onclick="goToCheckout()"
                         class="w-full py-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-lg rounded-2xl shadow-fab btn-haptic">
-                        Siguiente: Confirmar Mesa ➔
+                        Next: Confirm Table ➔
                     </button>
                 </div>
             </div>
@@ -1210,7 +1210,7 @@
                             class="w-9 h-9 flex flex-shrink-0 items-center justify-center rounded-full bg-dark-800/80 text-zinc-400 hover:text-white hover:bg-zinc-700 btn-haptic border border-white/[0.06]">
                             <span class="font-bold leading-none text-xl mb-1">&larr;</span>
                         </button>
-                        <h2 class="text-xl font-bold text-zinc-100 font-fancy truncate">Detalles de tu Mesa</h2>
+                        <h2 class="text-xl font-bold text-zinc-100 font-fancy truncate">Table Details</h2>
                     </div>
                 </div>
 
@@ -1220,7 +1220,7 @@
                         <input type="hidden" id="orderMesa" value="">
                         <div id="displayMesa"
                             class="w-full bg-dark-900 border border-amber-500/30 text-amber-500 rounded-2xl px-4 py-3.5 text-sm font-bold flex items-center shadow-glow mb-2">
-                            📍 Detectando mesa...
+                            📍 Detecting table...
                         </div>
                         <input type="text" id="orderName" placeholder="Full Name"
                             class="w-full bg-dark-800/80 text-zinc-200 border border-white/[0.08] rounded-2xl px-4 py-3.5 text-sm outline-none focus:border-amber-500/40 focus:ring-1 focus:ring-amber-500/40 transition-all placeholder-zinc-500">
@@ -1288,20 +1288,20 @@
     <div id="upsellModal" class="fixed inset-0 z-[65] hidden flex-col justify-center items-center px-4">
         <div class="absolute inset-0 bg-black/70 backdrop-blur-lg transition-opacity opacity-0" id="upsellModalBackdrop"></div>
         <div class="relative bg-dark-900 border border-amber-500/25 rounded-[28px] p-7 w-full max-w-sm transform scale-95 opacity-0 transition-all duration-300 shadow-[0_0_60px_rgba(245,158,11,0.15),0_8px_32px_rgba(0,0,0,0.4)] flex flex-col gap-3 text-center" id="upsellModalContent">
-            <h3 class="text-amber-400 text-2xl font-bold font-fancy mb-1">¿Hacerlo aún mejor?</h3>
-            <p class="text-zinc-400/80 text-sm mb-4">Agrega un delicioso extra a tu platillo</p>
+            <h3 class="text-amber-400 text-2xl font-bold font-fancy mb-1">Make it even better?</h3>
+            <p class="text-zinc-400/80 text-sm mb-4">Add a delicious extra to your meal</p>
             
-            <button onclick="confirmUpsell('🥑 Extra Aguacate', 2.00)" class="w-full bg-dark-800/80 text-white p-4 rounded-2xl flex items-center justify-between hover:bg-zinc-700 btn-haptic border border-white/[0.06] shadow-sm">
-                <span class="font-bold text-lg">🥑 Extra Aguacate</span>
+            <button onclick="confirmUpsell('🥑 Extra Avocado', 2.00)" class="w-full bg-dark-800/80 text-white p-4 rounded-2xl flex items-center justify-between hover:bg-zinc-700 btn-haptic border border-white/[0.06] shadow-sm">
+                <span class="font-bold text-lg">🥑 Extra Avocado</span>
                 <span class="text-amber-400 font-bold price-glow">+$2.00</span>
             </button>
-            <button onclick="confirmUpsell('🧀 Extra Queso', 1.50)" class="w-full bg-dark-800/80 text-white p-4 rounded-2xl flex items-center justify-between hover:bg-zinc-700 btn-haptic border border-white/[0.06] shadow-sm">
-                <span class="font-bold text-lg">🧀 Extra Queso</span>
+            <button onclick="confirmUpsell('🧀 Extra Cheese', 1.50)" class="w-full bg-dark-800/80 text-white p-4 rounded-2xl flex items-center justify-between hover:bg-zinc-700 btn-haptic border border-white/[0.06] shadow-sm">
+                <span class="font-bold text-lg">🧀 Extra Cheese</span>
                 <span class="text-amber-400 font-bold price-glow">+$1.50</span>
             </button>
 
             <button onclick="declineUpsell()" class="w-full mt-3 text-zinc-500 p-3 rounded-2xl hover:text-zinc-300 hover:bg-white/[0.03] transition-colors font-medium text-sm text-center">
-                No gracias, agregar al carrito
+                No thanks, add to cart
             </button>
         </div>
     </div>
@@ -1542,10 +1542,10 @@
 
             if (m) {
                 document.getElementById('orderMesa').value = m;
-                if (display) display.innerHTML = `📍 Mesa <span class="text-zinc-100 font-extrabold mx-1">${m}</span> Confirmada`;
+                if (display) display.innerHTML = `📍 Table <span class="text-zinc-100 font-extrabold mx-1">${m}</span> Confirmed`;
             } else {
                 // Si entraron al link directo sin escanear el QR
-                setTimeout(() => showToast('⚠️ Por favor escanea el QR de tu mesa para pedir', 'error'), 500);
+                setTimeout(() => showToast('⚠️ Please scan your table QR code to order', 'error'), 500);
 
                 // Desactivar boton flotante de Checkout
                 const btnCheckout = document.querySelector('#cartBar button');
@@ -1557,7 +1557,7 @@
                 if (display) {
                     display.classList.remove('text-amber-500', 'border-amber-500/40');
                     display.classList.add('text-red-400', 'border-red-500/40');
-                    display.innerHTML = '⚠️ QR no detectado';
+                    display.innerHTML = '⚠️ No QR detected';
                 }
             }
         }
